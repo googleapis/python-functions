@@ -22,6 +22,7 @@ import grpc
 from grpc.experimental import aio
 import math
 import pytest
+from proto.marshal.rules.dates import DurationRule, TimestampRule
 
 from google import auth
 from google.api_core import client_options
@@ -626,8 +627,6 @@ def test_get_function(transport: str = "grpc"):
         call.return_value = functions.CloudFunction(
             name="name_value",
             description="description_value",
-            source_archive_url="source_archive_url_value",
-            source_upload_url="source_upload_url_value",
             status=functions.CloudFunctionStatus.ACTIVE,
             entry_point="entry_point_value",
             runtime="runtime_value",
@@ -640,6 +639,8 @@ def test_get_function(transport: str = "grpc"):
             vpc_connector_egress_settings=functions.CloudFunction.VpcConnectorEgressSettings.PRIVATE_RANGES_ONLY,
             ingress_settings=functions.CloudFunction.IngressSettings.ALLOW_ALL,
             build_id="build_id_value",
+            source_archive_url="source_archive_url_value",
+            https_trigger=functions.HttpsTrigger(url="url_value"),
         )
 
         response = client.get_function(request)
@@ -656,10 +657,6 @@ def test_get_function(transport: str = "grpc"):
     assert response.name == "name_value"
 
     assert response.description == "description_value"
-
-    assert response.source_archive_url == "source_archive_url_value"
-
-    assert response.source_upload_url == "source_upload_url_value"
 
     assert response.status == functions.CloudFunctionStatus.ACTIVE
 
@@ -710,8 +707,6 @@ async def test_get_function_async(transport: str = "grpc_asyncio"):
             functions.CloudFunction(
                 name="name_value",
                 description="description_value",
-                source_archive_url="source_archive_url_value",
-                source_upload_url="source_upload_url_value",
                 status=functions.CloudFunctionStatus.ACTIVE,
                 entry_point="entry_point_value",
                 runtime="runtime_value",
@@ -741,10 +736,6 @@ async def test_get_function_async(transport: str = "grpc_asyncio"):
     assert response.name == "name_value"
 
     assert response.description == "description_value"
-
-    assert response.source_archive_url == "source_archive_url_value"
-
-    assert response.source_upload_url == "source_upload_url_value"
 
     assert response.status == functions.CloudFunctionStatus.ACTIVE
 
@@ -851,6 +842,7 @@ def test_get_function_flattened():
         # request object values.
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
+
         assert args[0].name == "name_value"
 
 
@@ -891,6 +883,7 @@ async def test_get_function_flattened_async():
         # request object values.
         assert len(call.mock_calls)
         _, args, _ = call.mock_calls[0]
+
         assert args[0].name == "name_value"
 
 
@@ -1043,7 +1036,9 @@ def test_create_function_flattened():
         # request object values.
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
+
         assert args[0].location == "location_value"
+
         assert args[0].function == functions.CloudFunction(name="name_value")
 
 
@@ -1089,7 +1084,9 @@ async def test_create_function_flattened_async():
         # request object values.
         assert len(call.mock_calls)
         _, args, _ = call.mock_calls[0]
+
         assert args[0].location == "location_value"
+
         assert args[0].function == functions.CloudFunction(name="name_value")
 
 
@@ -1245,6 +1242,7 @@ def test_update_function_flattened():
         # request object values.
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
+
         assert args[0].function == functions.CloudFunction(name="name_value")
 
 
@@ -1288,6 +1286,7 @@ async def test_update_function_flattened_async():
         # request object values.
         assert len(call.mock_calls)
         _, args, _ = call.mock_calls[0]
+
         assert args[0].function == functions.CloudFunction(name="name_value")
 
 
@@ -1438,6 +1437,7 @@ def test_delete_function_flattened():
         # request object values.
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
+
         assert args[0].name == "name_value"
 
 
@@ -1478,6 +1478,7 @@ async def test_delete_function_flattened_async():
         # request object values.
         assert len(call.mock_calls)
         _, args, _ = call.mock_calls[0]
+
         assert args[0].name == "name_value"
 
 
@@ -1649,7 +1650,9 @@ def test_call_function_flattened():
         # request object values.
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
+
         assert args[0].name == "name_value"
+
         assert args[0].data == "data_value"
 
 
@@ -1690,7 +1693,9 @@ async def test_call_function_flattened_async():
         # request object values.
         assert len(call.mock_calls)
         _, args, _ = call.mock_calls[0]
+
         assert args[0].name == "name_value"
+
         assert args[0].data == "data_value"
 
 
