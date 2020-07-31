@@ -17,12 +17,12 @@
 
 from typing import Awaitable, Callable, Dict, Optional, Sequence, Tuple
 
-from google.api_core import grpc_helpers_async         # type: ignore
-from google.api_core import operations_v1              # type: ignore
-from google.auth import credentials                    # type: ignore
+from google.api_core import grpc_helpers_async  # type: ignore
+from google.api_core import operations_v1  # type: ignore
+from google.auth import credentials  # type: ignore
 from google.auth.transport.grpc import SslCredentials  # type: ignore
 
-import grpc                        # type: ignore
+import grpc  # type: ignore
 from grpc.experimental import aio  # type: ignore
 
 from google.cloud.functions_v1.types import functions
@@ -52,13 +52,15 @@ class CloudFunctionsServiceGrpcAsyncIOTransport(CloudFunctionsServiceTransport):
     _stubs: Dict[str, Callable] = {}
 
     @classmethod
-    def create_channel(cls,
-                       host: str = 'cloudfunctions.googleapis.com',
-                       credentials: credentials.Credentials = None,
-                       credentials_file: Optional[str] = None,
-                       scopes: Optional[Sequence[str]] = None,
-                       quota_project_id: Optional[str] = None,
-                       **kwargs) -> aio.Channel:
+    def create_channel(
+        cls,
+        host: str = "cloudfunctions.googleapis.com",
+        credentials: credentials.Credentials = None,
+        credentials_file: Optional[str] = None,
+        scopes: Optional[Sequence[str]] = None,
+        quota_project_id: Optional[str] = None,
+        **kwargs,
+    ) -> aio.Channel:
         """Create and return a gRPC AsyncIO channel object.
         Args:
             address (Optional[str]): The host for the channel to use.
@@ -87,19 +89,21 @@ class CloudFunctionsServiceGrpcAsyncIOTransport(CloudFunctionsServiceTransport):
             credentials_file=credentials_file,
             scopes=scopes,
             quota_project_id=quota_project_id,
-            **kwargs
+            **kwargs,
         )
 
-    def __init__(self, *,
-            host: str = 'cloudfunctions.googleapis.com',
-            credentials: credentials.Credentials = None,
-            credentials_file: Optional[str] = None,
-            scopes: Optional[Sequence[str]] = None,
-            channel: aio.Channel = None,
-            api_mtls_endpoint: str = None,
-            client_cert_source: Callable[[], Tuple[bytes, bytes]] = None,
-            quota_project_id=None,
-            ) -> None:
+    def __init__(
+        self,
+        *,
+        host: str = "cloudfunctions.googleapis.com",
+        credentials: credentials.Credentials = None,
+        credentials_file: Optional[str] = None,
+        scopes: Optional[Sequence[str]] = None,
+        channel: aio.Channel = None,
+        api_mtls_endpoint: str = None,
+        client_cert_source: Callable[[], Tuple[bytes, bytes]] = None,
+        quota_project_id=None,
+    ) -> None:
         """Instantiate the transport.
 
         Args:
@@ -143,7 +147,11 @@ class CloudFunctionsServiceGrpcAsyncIOTransport(CloudFunctionsServiceTransport):
             # If a channel was explicitly provided, set it.
             self._grpc_channel = channel
         elif api_mtls_endpoint:
-            host = api_mtls_endpoint if ":" in api_mtls_endpoint else api_mtls_endpoint + ":443"
+            host = (
+                api_mtls_endpoint
+                if ":" in api_mtls_endpoint
+                else api_mtls_endpoint + ":443"
+            )
 
             # Create SSL credentials with client_cert_source or application
             # default SSL credentials.
@@ -185,10 +193,9 @@ class CloudFunctionsServiceGrpcAsyncIOTransport(CloudFunctionsServiceTransport):
         """
         # Sanity check: Only create a new channel if we do not already
         # have one.
-        if not hasattr(self, '_grpc_channel'):
+        if not hasattr(self, "_grpc_channel"):
             self._grpc_channel = self.create_channel(
-                self._host,
-                credentials=self._credentials,
+                self._host, credentials=self._credentials,
             )
 
         # Return the channel from cache.
@@ -202,18 +209,20 @@ class CloudFunctionsServiceGrpcAsyncIOTransport(CloudFunctionsServiceTransport):
         client.
         """
         # Sanity check: Only create a new client if we do not already have one.
-        if 'operations_client' not in self.__dict__:
-            self.__dict__['operations_client'] = operations_v1.OperationsAsyncClient(
+        if "operations_client" not in self.__dict__:
+            self.__dict__["operations_client"] = operations_v1.OperationsAsyncClient(
                 self.grpc_channel
             )
 
         # Return the client from cache.
-        return self.__dict__['operations_client']
+        return self.__dict__["operations_client"]
 
     @property
-    def list_functions(self) -> Callable[
-            [functions.ListFunctionsRequest],
-            Awaitable[functions.ListFunctionsResponse]]:
+    def list_functions(
+        self,
+    ) -> Callable[
+        [functions.ListFunctionsRequest], Awaitable[functions.ListFunctionsResponse]
+    ]:
         r"""Return a callable for the list functions method over gRPC.
 
         Returns a list of functions that belong to the
@@ -229,18 +238,18 @@ class CloudFunctionsServiceGrpcAsyncIOTransport(CloudFunctionsServiceTransport):
         # the request.
         # gRPC handles serialization and deserialization, so we just need
         # to pass in the functions for each.
-        if 'list_functions' not in self._stubs:
-            self._stubs['list_functions'] = self.grpc_channel.unary_unary(
-                '/google.cloud.functions.v1.CloudFunctionsService/ListFunctions',
+        if "list_functions" not in self._stubs:
+            self._stubs["list_functions"] = self.grpc_channel.unary_unary(
+                "/google.cloud.functions.v1.CloudFunctionsService/ListFunctions",
                 request_serializer=functions.ListFunctionsRequest.serialize,
                 response_deserializer=functions.ListFunctionsResponse.deserialize,
             )
-        return self._stubs['list_functions']
+        return self._stubs["list_functions"]
 
     @property
-    def get_function(self) -> Callable[
-            [functions.GetFunctionRequest],
-            Awaitable[functions.CloudFunction]]:
+    def get_function(
+        self,
+    ) -> Callable[[functions.GetFunctionRequest], Awaitable[functions.CloudFunction]]:
         r"""Return a callable for the get function method over gRPC.
 
         Returns a function with the given name from the
@@ -256,18 +265,18 @@ class CloudFunctionsServiceGrpcAsyncIOTransport(CloudFunctionsServiceTransport):
         # the request.
         # gRPC handles serialization and deserialization, so we just need
         # to pass in the functions for each.
-        if 'get_function' not in self._stubs:
-            self._stubs['get_function'] = self.grpc_channel.unary_unary(
-                '/google.cloud.functions.v1.CloudFunctionsService/GetFunction',
+        if "get_function" not in self._stubs:
+            self._stubs["get_function"] = self.grpc_channel.unary_unary(
+                "/google.cloud.functions.v1.CloudFunctionsService/GetFunction",
                 request_serializer=functions.GetFunctionRequest.serialize,
                 response_deserializer=functions.CloudFunction.deserialize,
             )
-        return self._stubs['get_function']
+        return self._stubs["get_function"]
 
     @property
-    def create_function(self) -> Callable[
-            [functions.CreateFunctionRequest],
-            Awaitable[operations.Operation]]:
+    def create_function(
+        self,
+    ) -> Callable[[functions.CreateFunctionRequest], Awaitable[operations.Operation]]:
         r"""Return a callable for the create function method over gRPC.
 
         Creates a new function. If a function with the given name
@@ -284,18 +293,18 @@ class CloudFunctionsServiceGrpcAsyncIOTransport(CloudFunctionsServiceTransport):
         # the request.
         # gRPC handles serialization and deserialization, so we just need
         # to pass in the functions for each.
-        if 'create_function' not in self._stubs:
-            self._stubs['create_function'] = self.grpc_channel.unary_unary(
-                '/google.cloud.functions.v1.CloudFunctionsService/CreateFunction',
+        if "create_function" not in self._stubs:
+            self._stubs["create_function"] = self.grpc_channel.unary_unary(
+                "/google.cloud.functions.v1.CloudFunctionsService/CreateFunction",
                 request_serializer=functions.CreateFunctionRequest.serialize,
                 response_deserializer=operations.Operation.FromString,
             )
-        return self._stubs['create_function']
+        return self._stubs["create_function"]
 
     @property
-    def update_function(self) -> Callable[
-            [functions.UpdateFunctionRequest],
-            Awaitable[operations.Operation]]:
+    def update_function(
+        self,
+    ) -> Callable[[functions.UpdateFunctionRequest], Awaitable[operations.Operation]]:
         r"""Return a callable for the update function method over gRPC.
 
         Updates existing function.
@@ -310,18 +319,18 @@ class CloudFunctionsServiceGrpcAsyncIOTransport(CloudFunctionsServiceTransport):
         # the request.
         # gRPC handles serialization and deserialization, so we just need
         # to pass in the functions for each.
-        if 'update_function' not in self._stubs:
-            self._stubs['update_function'] = self.grpc_channel.unary_unary(
-                '/google.cloud.functions.v1.CloudFunctionsService/UpdateFunction',
+        if "update_function" not in self._stubs:
+            self._stubs["update_function"] = self.grpc_channel.unary_unary(
+                "/google.cloud.functions.v1.CloudFunctionsService/UpdateFunction",
                 request_serializer=functions.UpdateFunctionRequest.serialize,
                 response_deserializer=operations.Operation.FromString,
             )
-        return self._stubs['update_function']
+        return self._stubs["update_function"]
 
     @property
-    def delete_function(self) -> Callable[
-            [functions.DeleteFunctionRequest],
-            Awaitable[operations.Operation]]:
+    def delete_function(
+        self,
+    ) -> Callable[[functions.DeleteFunctionRequest], Awaitable[operations.Operation]]:
         r"""Return a callable for the delete function method over gRPC.
 
         Deletes a function with the given name from the
@@ -339,18 +348,20 @@ class CloudFunctionsServiceGrpcAsyncIOTransport(CloudFunctionsServiceTransport):
         # the request.
         # gRPC handles serialization and deserialization, so we just need
         # to pass in the functions for each.
-        if 'delete_function' not in self._stubs:
-            self._stubs['delete_function'] = self.grpc_channel.unary_unary(
-                '/google.cloud.functions.v1.CloudFunctionsService/DeleteFunction',
+        if "delete_function" not in self._stubs:
+            self._stubs["delete_function"] = self.grpc_channel.unary_unary(
+                "/google.cloud.functions.v1.CloudFunctionsService/DeleteFunction",
                 request_serializer=functions.DeleteFunctionRequest.serialize,
                 response_deserializer=operations.Operation.FromString,
             )
-        return self._stubs['delete_function']
+        return self._stubs["delete_function"]
 
     @property
-    def call_function(self) -> Callable[
-            [functions.CallFunctionRequest],
-            Awaitable[functions.CallFunctionResponse]]:
+    def call_function(
+        self,
+    ) -> Callable[
+        [functions.CallFunctionRequest], Awaitable[functions.CallFunctionResponse]
+    ]:
         r"""Return a callable for the call function method over gRPC.
 
         Synchronously invokes a deployed Cloud Function. To be used for
@@ -368,18 +379,21 @@ class CloudFunctionsServiceGrpcAsyncIOTransport(CloudFunctionsServiceTransport):
         # the request.
         # gRPC handles serialization and deserialization, so we just need
         # to pass in the functions for each.
-        if 'call_function' not in self._stubs:
-            self._stubs['call_function'] = self.grpc_channel.unary_unary(
-                '/google.cloud.functions.v1.CloudFunctionsService/CallFunction',
+        if "call_function" not in self._stubs:
+            self._stubs["call_function"] = self.grpc_channel.unary_unary(
+                "/google.cloud.functions.v1.CloudFunctionsService/CallFunction",
                 request_serializer=functions.CallFunctionRequest.serialize,
                 response_deserializer=functions.CallFunctionResponse.deserialize,
             )
-        return self._stubs['call_function']
+        return self._stubs["call_function"]
 
     @property
-    def generate_upload_url(self) -> Callable[
-            [functions.GenerateUploadUrlRequest],
-            Awaitable[functions.GenerateUploadUrlResponse]]:
+    def generate_upload_url(
+        self,
+    ) -> Callable[
+        [functions.GenerateUploadUrlRequest],
+        Awaitable[functions.GenerateUploadUrlResponse],
+    ]:
         r"""Return a callable for the generate upload url method over gRPC.
 
         Returns a signed URL for uploading a function source code. For
@@ -421,18 +435,21 @@ class CloudFunctionsServiceGrpcAsyncIOTransport(CloudFunctionsServiceTransport):
         # the request.
         # gRPC handles serialization and deserialization, so we just need
         # to pass in the functions for each.
-        if 'generate_upload_url' not in self._stubs:
-            self._stubs['generate_upload_url'] = self.grpc_channel.unary_unary(
-                '/google.cloud.functions.v1.CloudFunctionsService/GenerateUploadUrl',
+        if "generate_upload_url" not in self._stubs:
+            self._stubs["generate_upload_url"] = self.grpc_channel.unary_unary(
+                "/google.cloud.functions.v1.CloudFunctionsService/GenerateUploadUrl",
                 request_serializer=functions.GenerateUploadUrlRequest.serialize,
                 response_deserializer=functions.GenerateUploadUrlResponse.deserialize,
             )
-        return self._stubs['generate_upload_url']
+        return self._stubs["generate_upload_url"]
 
     @property
-    def generate_download_url(self) -> Callable[
-            [functions.GenerateDownloadUrlRequest],
-            Awaitable[functions.GenerateDownloadUrlResponse]]:
+    def generate_download_url(
+        self,
+    ) -> Callable[
+        [functions.GenerateDownloadUrlRequest],
+        Awaitable[functions.GenerateDownloadUrlResponse],
+    ]:
         r"""Return a callable for the generate download url method over gRPC.
 
         Returns a signed URL for downloading deployed
@@ -453,18 +470,18 @@ class CloudFunctionsServiceGrpcAsyncIOTransport(CloudFunctionsServiceTransport):
         # the request.
         # gRPC handles serialization and deserialization, so we just need
         # to pass in the functions for each.
-        if 'generate_download_url' not in self._stubs:
-            self._stubs['generate_download_url'] = self.grpc_channel.unary_unary(
-                '/google.cloud.functions.v1.CloudFunctionsService/GenerateDownloadUrl',
+        if "generate_download_url" not in self._stubs:
+            self._stubs["generate_download_url"] = self.grpc_channel.unary_unary(
+                "/google.cloud.functions.v1.CloudFunctionsService/GenerateDownloadUrl",
                 request_serializer=functions.GenerateDownloadUrlRequest.serialize,
                 response_deserializer=functions.GenerateDownloadUrlResponse.deserialize,
             )
-        return self._stubs['generate_download_url']
+        return self._stubs["generate_download_url"]
 
     @property
-    def set_iam_policy(self) -> Callable[
-            [iam_policy.SetIamPolicyRequest],
-            Awaitable[policy.Policy]]:
+    def set_iam_policy(
+        self,
+    ) -> Callable[[iam_policy.SetIamPolicyRequest], Awaitable[policy.Policy]]:
         r"""Return a callable for the set iam policy method over gRPC.
 
         Sets the IAM access control policy on the specified
@@ -480,18 +497,18 @@ class CloudFunctionsServiceGrpcAsyncIOTransport(CloudFunctionsServiceTransport):
         # the request.
         # gRPC handles serialization and deserialization, so we just need
         # to pass in the functions for each.
-        if 'set_iam_policy' not in self._stubs:
-            self._stubs['set_iam_policy'] = self.grpc_channel.unary_unary(
-                '/google.cloud.functions.v1.CloudFunctionsService/SetIamPolicy',
+        if "set_iam_policy" not in self._stubs:
+            self._stubs["set_iam_policy"] = self.grpc_channel.unary_unary(
+                "/google.cloud.functions.v1.CloudFunctionsService/SetIamPolicy",
                 request_serializer=iam_policy.SetIamPolicyRequest.SerializeToString,
                 response_deserializer=policy.Policy.FromString,
             )
-        return self._stubs['set_iam_policy']
+        return self._stubs["set_iam_policy"]
 
     @property
-    def get_iam_policy(self) -> Callable[
-            [iam_policy.GetIamPolicyRequest],
-            Awaitable[policy.Policy]]:
+    def get_iam_policy(
+        self,
+    ) -> Callable[[iam_policy.GetIamPolicyRequest], Awaitable[policy.Policy]]:
         r"""Return a callable for the get iam policy method over gRPC.
 
         Gets the IAM access control policy for a function.
@@ -508,18 +525,21 @@ class CloudFunctionsServiceGrpcAsyncIOTransport(CloudFunctionsServiceTransport):
         # the request.
         # gRPC handles serialization and deserialization, so we just need
         # to pass in the functions for each.
-        if 'get_iam_policy' not in self._stubs:
-            self._stubs['get_iam_policy'] = self.grpc_channel.unary_unary(
-                '/google.cloud.functions.v1.CloudFunctionsService/GetIamPolicy',
+        if "get_iam_policy" not in self._stubs:
+            self._stubs["get_iam_policy"] = self.grpc_channel.unary_unary(
+                "/google.cloud.functions.v1.CloudFunctionsService/GetIamPolicy",
                 request_serializer=iam_policy.GetIamPolicyRequest.SerializeToString,
                 response_deserializer=policy.Policy.FromString,
             )
-        return self._stubs['get_iam_policy']
+        return self._stubs["get_iam_policy"]
 
     @property
-    def test_iam_permissions(self) -> Callable[
-            [iam_policy.TestIamPermissionsRequest],
-            Awaitable[iam_policy.TestIamPermissionsResponse]]:
+    def test_iam_permissions(
+        self,
+    ) -> Callable[
+        [iam_policy.TestIamPermissionsRequest],
+        Awaitable[iam_policy.TestIamPermissionsResponse],
+    ]:
         r"""Return a callable for the test iam permissions method over gRPC.
 
         Tests the specified permissions against the IAM access control
@@ -536,15 +556,13 @@ class CloudFunctionsServiceGrpcAsyncIOTransport(CloudFunctionsServiceTransport):
         # the request.
         # gRPC handles serialization and deserialization, so we just need
         # to pass in the functions for each.
-        if 'test_iam_permissions' not in self._stubs:
-            self._stubs['test_iam_permissions'] = self.grpc_channel.unary_unary(
-                '/google.cloud.functions.v1.CloudFunctionsService/TestIamPermissions',
+        if "test_iam_permissions" not in self._stubs:
+            self._stubs["test_iam_permissions"] = self.grpc_channel.unary_unary(
+                "/google.cloud.functions.v1.CloudFunctionsService/TestIamPermissions",
                 request_serializer=iam_policy.TestIamPermissionsRequest.SerializeToString,
                 response_deserializer=iam_policy.TestIamPermissionsResponse.FromString,
             )
-        return self._stubs['test_iam_permissions']
+        return self._stubs["test_iam_permissions"]
 
 
-__all__ = (
-    'CloudFunctionsServiceGrpcAsyncIOTransport',
-)
+__all__ = ("CloudFunctionsServiceGrpcAsyncIOTransport",)

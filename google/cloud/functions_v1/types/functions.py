@@ -24,26 +24,26 @@ from google.protobuf import timestamp_pb2 as timestamp  # type: ignore
 
 
 __protobuf__ = proto.module(
-    package='google.cloud.functions.v1',
+    package="google.cloud.functions.v1",
     manifest={
-        'CloudFunctionStatus',
-        'CloudFunction',
-        'SourceRepository',
-        'HttpsTrigger',
-        'EventTrigger',
-        'FailurePolicy',
-        'CreateFunctionRequest',
-        'UpdateFunctionRequest',
-        'GetFunctionRequest',
-        'ListFunctionsRequest',
-        'ListFunctionsResponse',
-        'DeleteFunctionRequest',
-        'CallFunctionRequest',
-        'CallFunctionResponse',
-        'GenerateUploadUrlRequest',
-        'GenerateUploadUrlResponse',
-        'GenerateDownloadUrlRequest',
-        'GenerateDownloadUrlResponse',
+        "CloudFunctionStatus",
+        "CloudFunction",
+        "SourceRepository",
+        "HttpsTrigger",
+        "EventTrigger",
+        "FailurePolicy",
+        "CreateFunctionRequest",
+        "UpdateFunctionRequest",
+        "GetFunctionRequest",
+        "ListFunctionsRequest",
+        "ListFunctionsResponse",
+        "DeleteFunctionRequest",
+        "CallFunctionRequest",
+        "CallFunctionResponse",
+        "GenerateUploadUrlRequest",
+        "GenerateUploadUrlResponse",
+        "GenerateDownloadUrlRequest",
+        "GenerateDownloadUrlResponse",
     },
 )
 
@@ -171,6 +171,7 @@ class CloudFunction(proto.Message):
             Output only. The Cloud Build ID of the latest
             successful deployment of the function.
     """
+
     class VpcConnectorEgressSettings(proto.Enum):
         r"""Available egress settings.
 
@@ -197,41 +198,35 @@ class CloudFunction(proto.Message):
 
     description = proto.Field(proto.STRING, number=2)
 
-    source_archive_url = proto.Field(proto.STRING, number=3, oneof='source_code')
+    source_archive_url = proto.Field(proto.STRING, number=3, oneof="source_code")
 
-    source_repository = proto.Field(proto.MESSAGE, number=4, oneof='source_code',
-        message='SourceRepository',
+    source_repository = proto.Field(
+        proto.MESSAGE, number=4, oneof="source_code", message="SourceRepository",
     )
 
-    source_upload_url = proto.Field(proto.STRING, number=16, oneof='source_code')
+    source_upload_url = proto.Field(proto.STRING, number=16, oneof="source_code")
 
-    https_trigger = proto.Field(proto.MESSAGE, number=5, oneof='trigger',
-        message='HttpsTrigger',
+    https_trigger = proto.Field(
+        proto.MESSAGE, number=5, oneof="trigger", message="HttpsTrigger",
     )
 
-    event_trigger = proto.Field(proto.MESSAGE, number=6, oneof='trigger',
-        message='EventTrigger',
+    event_trigger = proto.Field(
+        proto.MESSAGE, number=6, oneof="trigger", message="EventTrigger",
     )
 
-    status = proto.Field(proto.ENUM, number=7,
-        enum='CloudFunctionStatus',
-    )
+    status = proto.Field(proto.ENUM, number=7, enum="CloudFunctionStatus",)
 
     entry_point = proto.Field(proto.STRING, number=8)
 
     runtime = proto.Field(proto.STRING, number=19)
 
-    timeout = proto.Field(proto.MESSAGE, number=9,
-        message=duration.Duration,
-    )
+    timeout = proto.Field(proto.MESSAGE, number=9, message=duration.Duration,)
 
     available_memory_mb = proto.Field(proto.INT32, number=10)
 
     service_account_email = proto.Field(proto.STRING, number=11)
 
-    update_time = proto.Field(proto.MESSAGE, number=12,
-        message=timestamp.Timestamp,
-    )
+    update_time = proto.Field(proto.MESSAGE, number=12, message=timestamp.Timestamp,)
 
     version_id = proto.Field(proto.INT64, number=14)
 
@@ -245,13 +240,11 @@ class CloudFunction(proto.Message):
 
     vpc_connector = proto.Field(proto.STRING, number=22)
 
-    vpc_connector_egress_settings = proto.Field(proto.ENUM, number=23,
-        enum=VpcConnectorEgressSettings,
+    vpc_connector_egress_settings = proto.Field(
+        proto.ENUM, number=23, enum=VpcConnectorEgressSettings,
     )
 
-    ingress_settings = proto.Field(proto.ENUM, number=24,
-        enum=IngressSettings,
-    )
+    ingress_settings = proto.Field(proto.ENUM, number=24, enum=IngressSettings,)
 
     build_id = proto.Field(proto.STRING, number=27)
 
@@ -360,9 +353,7 @@ class EventTrigger(proto.Message):
 
     service = proto.Field(proto.STRING, number=3)
 
-    failure_policy = proto.Field(proto.MESSAGE, number=5,
-        message='FailurePolicy',
-    )
+    failure_policy = proto.Field(proto.MESSAGE, number=5, message="FailurePolicy",)
 
 
 class FailurePolicy(proto.Message):
@@ -375,6 +366,7 @@ class FailurePolicy(proto.Message):
             If specified, then the function will be
             retried in case of a failure.
     """
+
     class Retry(proto.Message):
         r"""Describes the retry policy in case of function's execution
         failure. A function execution will be retried on any failure. A
@@ -383,9 +375,7 @@ class FailurePolicy(proto.Message):
         Retried execution is charged as any other execution.
         """
 
-    retry = proto.Field(proto.MESSAGE, number=1, oneof='action',
-        message=Retry,
-    )
+    retry = proto.Field(proto.MESSAGE, number=1, oneof="action", message=Retry,)
 
 
 class CreateFunctionRequest(proto.Message):
@@ -402,9 +392,7 @@ class CreateFunctionRequest(proto.Message):
 
     location = proto.Field(proto.STRING, number=1)
 
-    function = proto.Field(proto.MESSAGE, number=2,
-        message=CloudFunction,
-    )
+    function = proto.Field(proto.MESSAGE, number=2, message=CloudFunction,)
 
 
 class UpdateFunctionRequest(proto.Message):
@@ -418,13 +406,9 @@ class UpdateFunctionRequest(proto.Message):
             request.
     """
 
-    function = proto.Field(proto.MESSAGE, number=1,
-        message=CloudFunction,
-    )
+    function = proto.Field(proto.MESSAGE, number=1, message=CloudFunction,)
 
-    update_mask = proto.Field(proto.MESSAGE, number=2,
-        message=field_mask.FieldMask,
-    )
+    update_mask = proto.Field(proto.MESSAGE, number=2, message=field_mask.FieldMask,)
 
 
 class GetFunctionRequest(proto.Message):
@@ -489,9 +473,7 @@ class ListFunctionsResponse(proto.Message):
     def raw_page(self):
         return self
 
-    functions = proto.RepeatedField(proto.MESSAGE, number=1,
-        message=CloudFunction,
-    )
+    functions = proto.RepeatedField(proto.MESSAGE, number=1, message=CloudFunction,)
 
     next_page_token = proto.Field(proto.STRING, number=2)
 

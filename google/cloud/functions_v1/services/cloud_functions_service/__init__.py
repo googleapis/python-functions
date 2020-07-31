@@ -19,6 +19,6 @@ from .client import CloudFunctionsServiceClient
 from .async_client import CloudFunctionsServiceAsyncClient
 
 __all__ = (
-    'CloudFunctionsServiceClient',
-    'CloudFunctionsServiceAsyncClient',
+    "CloudFunctionsServiceClient",
+    "CloudFunctionsServiceAsyncClient",
 )

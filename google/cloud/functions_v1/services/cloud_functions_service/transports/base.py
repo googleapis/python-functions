@@ -21,7 +21,7 @@ import pkg_resources
 
 from google import auth
 from google.api_core import exceptions  # type: ignore
-from google.api_core import gapic_v1    # type: ignore
+from google.api_core import gapic_v1  # type: ignore
 from google.api_core import retry as retries  # type: ignore
 from google.api_core import operations_v1  # type: ignore
 from google.auth import credentials  # type: ignore
@@ -34,29 +34,27 @@ from google.longrunning import operations_pb2 as operations  # type: ignore
 
 try:
     _client_info = gapic_v1.client_info.ClientInfo(
-        gapic_version=pkg_resources.get_distribution(
-            'google-cloud-functions',
-        ).version,
+        gapic_version=pkg_resources.get_distribution("google-cloud-functions",).version,
     )
 except pkg_resources.DistributionNotFound:
     _client_info = gapic_v1.client_info.ClientInfo()
 
+
 class CloudFunctionsServiceTransport(abc.ABC):
     """Abstract transport class for CloudFunctionsService."""
 
-    AUTH_SCOPES = (
-        'https://www.googleapis.com/auth/cloud-platform',
-    )
+    AUTH_SCOPES = ("https://www.googleapis.com/auth/cloud-platform",)
 
     def __init__(
-            self, *,
-            host: str = 'cloudfunctions.googleapis.com',
-            credentials: credentials.Credentials = None,
-            credentials_file: typing.Optional[str] = None,
-            scopes: typing.Optional[typing.Sequence[str]] = AUTH_SCOPES,
-            quota_project_id: typing.Optional[str] = None,
-            **kwargs,
-            ) -> None:
+        self,
+        *,
+        host: str = "cloudfunctions.googleapis.com",
+        credentials: credentials.Credentials = None,
+        credentials_file: typing.Optional[str] = None,
+        scopes: typing.Optional[typing.Sequence[str]] = AUTH_SCOPES,
+        quota_project_id: typing.Optional[str] = None,
+        **kwargs,
+    ) -> None:
         """Instantiate the transport.
 
         Args:
@@ -74,24 +72,26 @@ class CloudFunctionsServiceTransport(abc.ABC):
                 and quota.
         """
         # Save the hostname. Default to port 443 (HTTPS) if none is specified.
-        if ':' not in host:
-            host += ':443'
+        if ":" not in host:
+            host += ":443"
         self._host = host
 
         # If no credentials are provided, then determine the appropriate
         # defaults.
         if credentials and credentials_file:
-            raise exceptions.DuplicateCredentialArgs("'credentials_file' and 'credentials' are mutually exclusive")
+            raise exceptions.DuplicateCredentialArgs(
+                "'credentials_file' and 'credentials' are mutually exclusive"
+            )
 
         if credentials_file is not None:
             credentials, _ = auth.load_credentials_from_file(
-                                credentials_file,
-                                scopes=scopes,
-                                quota_project_id=quota_project_id
-                            )
+                credentials_file, scopes=scopes, quota_project_id=quota_project_id
+            )
 
         elif credentials is None:
-            credentials, _ = auth.default(scopes=scopes, quota_project_id=quota_project_id)
+            credentials, _ = auth.default(
+                scopes=scopes, quota_project_id=quota_project_id
+            )
 
         # Save the credentials.
         self._credentials = credentials
@@ -103,34 +103,22 @@ class CloudFunctionsServiceTransport(abc.ABC):
         # Precompute the wrapped methods.
         self._wrapped_methods = {
             self.list_functions: gapic_v1.method.wrap_method(
-                self.list_functions,
-                default_timeout=None,
-                client_info=_client_info,
+                self.list_functions, default_timeout=None, client_info=_client_info,
             ),
             self.get_function: gapic_v1.method.wrap_method(
-                self.get_function,
-                default_timeout=None,
-                client_info=_client_info,
+                self.get_function, default_timeout=None, client_info=_client_info,
             ),
             self.create_function: gapic_v1.method.wrap_method(
-                self.create_function,
-                default_timeout=None,
-                client_info=_client_info,
+                self.create_function, default_timeout=None, client_info=_client_info,
             ),
             self.update_function: gapic_v1.method.wrap_method(
-                self.update_function,
-                default_timeout=None,
-                client_info=_client_info,
+                self.update_function, default_timeout=None, client_info=_client_info,
             ),
             self.delete_function: gapic_v1.method.wrap_method(
-                self.delete_function,
-                default_timeout=None,
-                client_info=_client_info,
+                self.delete_function, default_timeout=None, client_info=_client_info,
             ),
             self.call_function: gapic_v1.method.wrap_method(
-                self.call_function,
-                default_timeout=None,
-                client_info=_client_info,
+                self.call_function, default_timeout=None, client_info=_client_info,
             ),
             self.generate_upload_url: gapic_v1.method.wrap_method(
                 self.generate_upload_url,
@@ -143,21 +131,16 @@ class CloudFunctionsServiceTransport(abc.ABC):
                 client_info=_client_info,
             ),
             self.set_iam_policy: gapic_v1.method.wrap_method(
-                self.set_iam_policy,
-                default_timeout=None,
-                client_info=_client_info,
+                self.set_iam_policy, default_timeout=None, client_info=_client_info,
             ),
             self.get_iam_policy: gapic_v1.method.wrap_method(
-                self.get_iam_policy,
-                default_timeout=None,
-                client_info=_client_info,
+                self.get_iam_policy, default_timeout=None, client_info=_client_info,
             ),
             self.test_iam_permissions: gapic_v1.method.wrap_method(
                 self.test_iam_permissions,
                 default_timeout=None,
                 client_info=_client_info,
             ),
-
         }
 
     @property
@@ -166,105 +149,120 @@ class CloudFunctionsServiceTransport(abc.ABC):
         raise NotImplementedError()
 
     @property
-    def list_functions(self) -> typing.Callable[
-            [functions.ListFunctionsRequest],
-            typing.Union[
-                functions.ListFunctionsResponse,
-                typing.Awaitable[functions.ListFunctionsResponse]
-            ]]:
+    def list_functions(
+        self,
+    ) -> typing.Callable[
+        [functions.ListFunctionsRequest],
+        typing.Union[
+            functions.ListFunctionsResponse,
+            typing.Awaitable[functions.ListFunctionsResponse],
+        ],
+    ]:
         raise NotImplementedError()
 
     @property
-    def get_function(self) -> typing.Callable[
-            [functions.GetFunctionRequest],
-            typing.Union[
-                functions.CloudFunction,
-                typing.Awaitable[functions.CloudFunction]
-            ]]:
+    def get_function(
+        self,
+    ) -> typing.Callable[
+        [functions.GetFunctionRequest],
+        typing.Union[
+            functions.CloudFunction, typing.Awaitable[functions.CloudFunction]
+        ],
+    ]:
         raise NotImplementedError()
 
     @property
-    def create_function(self) -> typing.Callable[
-            [functions.CreateFunctionRequest],
-            typing.Union[
-                operations.Operation,
-                typing.Awaitable[operations.Operation]
-            ]]:
+    def create_function(
+        self,
+    ) -> typing.Callable[
+        [functions.CreateFunctionRequest],
+        typing.Union[operations.Operation, typing.Awaitable[operations.Operation]],
+    ]:
         raise NotImplementedError()
 
     @property
-    def update_function(self) -> typing.Callable[
-            [functions.UpdateFunctionRequest],
-            typing.Union[
-                operations.Operation,
-                typing.Awaitable[operations.Operation]
-            ]]:
+    def update_function(
+        self,
+    ) -> typing.Callable[
+        [functions.UpdateFunctionRequest],
+        typing.Union[operations.Operation, typing.Awaitable[operations.Operation]],
+    ]:
         raise NotImplementedError()
 
     @property
-    def delete_function(self) -> typing.Callable[
-            [functions.DeleteFunctionRequest],
-            typing.Union[
-                operations.Operation,
-                typing.Awaitable[operations.Operation]
-            ]]:
+    def delete_function(
+        self,
+    ) -> typing.Callable[
+        [functions.DeleteFunctionRequest],
+        typing.Union[operations.Operation, typing.Awaitable[operations.Operation]],
+    ]:
         raise NotImplementedError()
 
     @property
-    def call_function(self) -> typing.Callable[
-            [functions.CallFunctionRequest],
-            typing.Union[
-                functions.CallFunctionResponse,
-                typing.Awaitable[functions.CallFunctionResponse]
-            ]]:
+    def call_function(
+        self,
+    ) -> typing.Callable[
+        [functions.CallFunctionRequest],
+        typing.Union[
+            functions.CallFunctionResponse,
+            typing.Awaitable[functions.CallFunctionResponse],
+        ],
+    ]:
         raise NotImplementedError()
 
     @property
-    def generate_upload_url(self) -> typing.Callable[
-            [functions.GenerateUploadUrlRequest],
-            typing.Union[
-                functions.GenerateUploadUrlResponse,
-                typing.Awaitable[functions.GenerateUploadUrlResponse]
-            ]]:
+    def generate_upload_url(
+        self,
+    ) -> typing.Callable[
+        [functions.GenerateUploadUrlRequest],
+        typing.Union[
+            functions.GenerateUploadUrlResponse,
+            typing.Awaitable[functions.GenerateUploadUrlResponse],
+        ],
+    ]:
         raise NotImplementedError()
 
     @property
-    def generate_download_url(self) -> typing.Callable[
-            [functions.GenerateDownloadUrlRequest],
-            typing.Union[
-                functions.GenerateDownloadUrlResponse,
-                typing.Awaitable[functions.GenerateDownloadUrlResponse]
-            ]]:
+    def generate_download_url(
+        self,
+    ) -> typing.Callable[
+        [functions.GenerateDownloadUrlRequest],
+        typing.Union[
+            functions.GenerateDownloadUrlResponse,
+            typing.Awaitable[functions.GenerateDownloadUrlResponse],
+        ],
+    ]:
         raise NotImplementedError()
 
     @property
-    def set_iam_policy(self) -> typing.Callable[
-            [iam_policy.SetIamPolicyRequest],
-            typing.Union[
-                policy.Policy,
-                typing.Awaitable[policy.Policy]
-            ]]:
+    def set_iam_policy(
+        self,
+    ) -> typing.Callable[
+        [iam_policy.SetIamPolicyRequest],
+        typing.Union[policy.Policy, typing.Awaitable[policy.Policy]],
+    ]:
         raise NotImplementedError()
 
     @property
-    def get_iam_policy(self) -> typing.Callable[
-            [iam_policy.GetIamPolicyRequest],
-            typing.Union[
-                policy.Policy,
-                typing.Awaitable[policy.Policy]
-            ]]:
+    def get_iam_policy(
+        self,
+    ) -> typing.Callable[
+        [iam_policy.GetIamPolicyRequest],
+        typing.Union[policy.Policy, typing.Awaitable[policy.Policy]],
+    ]:
         raise NotImplementedError()
 
     @property
-    def test_iam_permissions(self) -> typing.Callable[
-            [iam_policy.TestIamPermissionsRequest],
-            typing.Union[
-                iam_policy.TestIamPermissionsResponse,
-                typing.Awaitable[iam_policy.TestIamPermissionsResponse]
-            ]]:
+    def test_iam_permissions(
+        self,
+    ) -> typing.Callable[
+        [iam_policy.TestIamPermissionsRequest],
+        typing.Union[
+            iam_policy.TestIamPermissionsResponse,
+            typing.Awaitable[iam_policy.TestIamPermissionsResponse],
+        ],
+    ]:
         raise NotImplementedError()
 
 
-__all__ = (
-    'CloudFunctionsServiceTransport',
-)
+__all__ = ("CloudFunctionsServiceTransport",)

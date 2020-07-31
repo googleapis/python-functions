@@ -15,8 +15,12 @@
 # limitations under the License.
 #
 
-from google.cloud.functions_v1.services.cloud_functions_service.async_client import CloudFunctionsServiceAsyncClient
-from google.cloud.functions_v1.services.cloud_functions_service.client import CloudFunctionsServiceClient
+from google.cloud.functions_v1.services.cloud_functions_service.async_client import (
+    CloudFunctionsServiceAsyncClient,
+)
+from google.cloud.functions_v1.services.cloud_functions_service.client import (
+    CloudFunctionsServiceClient,
+)
 from google.cloud.functions_v1.types.functions import CallFunctionRequest
 from google.cloud.functions_v1.types.functions import CallFunctionResponse
 from google.cloud.functions_v1.types.functions import CloudFunction
@@ -39,26 +43,26 @@ from google.cloud.functions_v1.types.operations import OperationMetadataV1
 from google.cloud.functions_v1.types.operations import OperationType
 
 __all__ = (
-    'CallFunctionRequest',
-    'CallFunctionResponse',
-    'CloudFunction',
-    'CloudFunctionStatus',
-    'CloudFunctionsServiceAsyncClient',
-    'CloudFunctionsServiceClient',
-    'CreateFunctionRequest',
-    'DeleteFunctionRequest',
-    'EventTrigger',
-    'FailurePolicy',
-    'GenerateDownloadUrlRequest',
-    'GenerateDownloadUrlResponse',
-    'GenerateUploadUrlRequest',
-    'GenerateUploadUrlResponse',
-    'GetFunctionRequest',
-    'HttpsTrigger',
-    'ListFunctionsRequest',
-    'ListFunctionsResponse',
-    'OperationMetadataV1',
-    'OperationType',
-    'SourceRepository',
-    'UpdateFunctionRequest',
+    "CallFunctionRequest",
+    "CallFunctionResponse",
+    "CloudFunction",
+    "CloudFunctionStatus",
+    "CloudFunctionsServiceAsyncClient",
+    "CloudFunctionsServiceClient",
+    "CreateFunctionRequest",
+    "DeleteFunctionRequest",
+    "EventTrigger",
+    "FailurePolicy",
+    "GenerateDownloadUrlRequest",
+    "GenerateDownloadUrlResponse",
+    "GenerateUploadUrlRequest",
+    "GenerateUploadUrlResponse",
+    "GetFunctionRequest",
+    "HttpsTrigger",
+    "ListFunctionsRequest",
+    "ListFunctionsResponse",
+    "OperationMetadataV1",
+    "OperationType",
+    "SourceRepository",
+    "UpdateFunctionRequest",
 )
