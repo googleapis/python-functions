@@ -15,45 +15,27 @@
 # limitations under the License.
 #
 
-from .functions import (
-    CloudFunction,
-    SourceRepository,
-    HttpsTrigger,
-    EventTrigger,
-    FailurePolicy,
-    CreateFunctionRequest,
-    UpdateFunctionRequest,
-    GetFunctionRequest,
-    ListFunctionsRequest,
-    ListFunctionsResponse,
-    DeleteFunctionRequest,
-    CallFunctionRequest,
-    CallFunctionResponse,
-    GenerateUploadUrlRequest,
-    GenerateUploadUrlResponse,
-    GenerateDownloadUrlRequest,
-    GenerateDownloadUrlResponse,
-)
-from .operations import OperationMetadataV1
+from .functions import (CloudFunction, SourceRepository, HttpsTrigger, EventTrigger, FailurePolicy, CreateFunctionRequest, UpdateFunctionRequest, GetFunctionRequest, ListFunctionsRequest, ListFunctionsResponse, DeleteFunctionRequest, CallFunctionRequest, CallFunctionResponse, GenerateUploadUrlRequest, GenerateUploadUrlResponse, GenerateDownloadUrlRequest, GenerateDownloadUrlResponse, )
+from .operations import (OperationMetadataV1, )
 
 
 __all__ = (
-    "CloudFunction",
-    "SourceRepository",
-    "HttpsTrigger",
-    "EventTrigger",
-    "FailurePolicy",
-    "CreateFunctionRequest",
-    "UpdateFunctionRequest",
-    "GetFunctionRequest",
-    "ListFunctionsRequest",
-    "ListFunctionsResponse",
-    "DeleteFunctionRequest",
-    "CallFunctionRequest",
-    "CallFunctionResponse",
-    "GenerateUploadUrlRequest",
-    "GenerateUploadUrlResponse",
-    "GenerateDownloadUrlRequest",
-    "GenerateDownloadUrlResponse",
-    "OperationMetadataV1",
+    'CloudFunction',
+    'SourceRepository',
+    'HttpsTrigger',
+    'EventTrigger',
+    'FailurePolicy',
+    'CreateFunctionRequest',
+    'UpdateFunctionRequest',
+    'GetFunctionRequest',
+    'ListFunctionsRequest',
+    'ListFunctionsResponse',
+    'DeleteFunctionRequest',
+    'CallFunctionRequest',
+    'CallFunctionResponse',
+    'GenerateUploadUrlRequest',
+    'GenerateUploadUrlResponse',
+    'GenerateDownloadUrlRequest',
+    'GenerateDownloadUrlResponse',
+    'OperationMetadataV1',
 )

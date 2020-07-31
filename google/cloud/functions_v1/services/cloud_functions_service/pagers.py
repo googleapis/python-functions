@@ -37,15 +37,12 @@ class ListFunctionsPager:
     attributes are available on the pager. If multiple requests are made, only
     the most recent response is retained, and thus used for attribute lookup.
     """
-
-    def __init__(
-        self,
-        method: Callable[..., functions.ListFunctionsResponse],
-        request: functions.ListFunctionsRequest,
-        response: functions.ListFunctionsResponse,
-        *,
-        metadata: Sequence[Tuple[str, str]] = ()
-    ):
+    def __init__(self,
+            method: Callable[..., functions.ListFunctionsResponse],
+            request: functions.ListFunctionsRequest,
+            response: functions.ListFunctionsResponse,
+            *,
+            metadata: Sequence[Tuple[str, str]] = ()):
         """Instantiate the pager.
 
         Args:
@@ -79,7 +76,7 @@ class ListFunctionsPager:
             yield from page.functions
 
     def __repr__(self) -> str:
-        return "{0}<{1!r}>".format(self.__class__.__name__, self._response)
+        return '{0}<{1!r}>'.format(self.__class__.__name__, self._response)
 
 
 class ListFunctionsAsyncPager:
@@ -99,15 +96,12 @@ class ListFunctionsAsyncPager:
     attributes are available on the pager. If multiple requests are made, only
     the most recent response is retained, and thus used for attribute lookup.
     """
-
-    def __init__(
-        self,
-        method: Callable[..., Awaitable[functions.ListFunctionsResponse]],
-        request: functions.ListFunctionsRequest,
-        response: functions.ListFunctionsResponse,
-        *,
-        metadata: Sequence[Tuple[str, str]] = ()
-    ):
+    def __init__(self,
+            method: Callable[..., Awaitable[functions.ListFunctionsResponse]],
+            request: functions.ListFunctionsRequest,
+            response: functions.ListFunctionsResponse,
+            *,
+            metadata: Sequence[Tuple[str, str]] = ()):
         """Instantiate the pager.
 
         Args:
@@ -145,4 +139,4 @@ class ListFunctionsAsyncPager:
         return async_generator()
 
     def __repr__(self) -> str:
-        return "{0}<{1!r}>".format(self.__class__.__name__, self._response)
+        return '{0}<{1!r}>'.format(self.__class__.__name__, self._response)

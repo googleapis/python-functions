@@ -23,8 +23,11 @@ from google.protobuf import timestamp_pb2 as timestamp  # type: ignore
 
 
 __protobuf__ = proto.module(
-    package="google.cloud.functions.v1",
-    manifest={"OperationType", "OperationMetadataV1",},
+    package='google.cloud.functions.v1',
+    manifest={
+        'OperationType',
+        'OperationMetadataV1',
+    },
 )
 
 
@@ -62,13 +65,19 @@ class OperationMetadataV1(proto.Message):
 
     target = proto.Field(proto.STRING, number=1)
 
-    type = proto.Field(proto.ENUM, number=2, enum="OperationType",)
+    type = proto.Field(proto.ENUM, number=2,
+        enum='OperationType',
+    )
 
-    request = proto.Field(proto.MESSAGE, number=3, message=any.Any,)
+    request = proto.Field(proto.MESSAGE, number=3,
+        message=any.Any,
+    )
 
     version_id = proto.Field(proto.INT64, number=4)
 
-    update_time = proto.Field(proto.MESSAGE, number=5, message=timestamp.Timestamp,)
+    update_time = proto.Field(proto.MESSAGE, number=5,
+        message=timestamp.Timestamp,
+    )
 
     build_id = proto.Field(proto.STRING, number=6)
 
