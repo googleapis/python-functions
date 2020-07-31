@@ -22,6 +22,7 @@ import grpc
 from grpc.experimental import aio
 import math
 import pytest
+from proto.marshal.rules.dates import DurationRule, TimestampRule
 
 from google import auth
 from google.api_core import client_options
@@ -58,6 +59,17 @@ from google.type import expr_pb2 as expr  # type: ignore
 
 def client_cert_source_callback():
     return b"cert bytes", b"key bytes"
+
+
+# If default endpoint is localhost, then default mtls endpoint will be the same.
+# This method modifies the default endpoint so the client can produce a different
+# mtls endpoint for endpoint testing purposes.
+def modify_default_endpoint(client):
+    return (
+        "foo.googleapis.com"
+        if ("localhost" in client.DEFAULT_ENDPOINT)
+        else client.DEFAULT_ENDPOINT
+    )
 
 
 def test__get_default_mtls_endpoint():
@@ -131,6 +143,16 @@ def test_cloud_functions_service_client_get_transport_class():
         ),
     ],
 )
+@mock.patch.object(
+    CloudFunctionsServiceClient,
+    "DEFAULT_ENDPOINT",
+    modify_default_endpoint(CloudFunctionsServiceClient),
+)
+@mock.patch.object(
+    CloudFunctionsServiceAsyncClient,
+    "DEFAULT_ENDPOINT",
+    modify_default_endpoint(CloudFunctionsServiceAsyncClient),
+)
 def test_cloud_functions_service_client_client_options(
     client_class, transport_class, transport_name
 ):
@@ -157,83 +179,13 @@ def test_cloud_functions_service_client_client_options(
             scopes=None,
             api_mtls_endpoint="squid.clam.whelk",
             client_cert_source=None,
+            quota_project_id=None,
         )
 
     # Check the case api_endpoint is not provided and GOOGLE_API_USE_MTLS is
     # "never".
-    os.environ["GOOGLE_API_USE_MTLS"] = "never"
-    with mock.patch.object(transport_class, "__init__") as patched:
-        patched.return_value = None
-        client = client_class()
-        patched.assert_called_once_with(
-            credentials=None,
-            credentials_file=None,
-            host=client.DEFAULT_ENDPOINT,
-            scopes=None,
-            api_mtls_endpoint=client.DEFAULT_ENDPOINT,
-            client_cert_source=None,
-        )
-
-    # Check the case api_endpoint is not provided and GOOGLE_API_USE_MTLS is
-    # "always".
-    os.environ["GOOGLE_API_USE_MTLS"] = "always"
-    with mock.patch.object(transport_class, "__init__") as patched:
-        patched.return_value = None
-        client = client_class()
-        patched.assert_called_once_with(
-            credentials=None,
-            credentials_file=None,
-            host=client.DEFAULT_MTLS_ENDPOINT,
-            scopes=None,
-            api_mtls_endpoint=client.DEFAULT_MTLS_ENDPOINT,
-            client_cert_source=None,
-        )
-
-    # Check the case api_endpoint is not provided, GOOGLE_API_USE_MTLS is
-    # "auto", and client_cert_source is provided.
-    os.environ["GOOGLE_API_USE_MTLS"] = "auto"
-    options = client_options.ClientOptions(
-        client_cert_source=client_cert_source_callback
-    )
-    with mock.patch.object(transport_class, "__init__") as patched:
-        patched.return_value = None
-        client = client_class(client_options=options)
-        patched.assert_called_once_with(
-            credentials=None,
-            credentials_file=None,
-            host=client.DEFAULT_MTLS_ENDPOINT,
-            scopes=None,
-            api_mtls_endpoint=client.DEFAULT_MTLS_ENDPOINT,
-            client_cert_source=client_cert_source_callback,
-        )
-
-    # Check the case api_endpoint is not provided, GOOGLE_API_USE_MTLS is
-    # "auto", and default_client_cert_source is provided.
-    os.environ["GOOGLE_API_USE_MTLS"] = "auto"
-    with mock.patch.object(transport_class, "__init__") as patched:
-        with mock.patch(
-            "google.auth.transport.mtls.has_default_client_cert_source",
-            return_value=True,
-        ):
-            patched.return_value = None
-            client = client_class()
-            patched.assert_called_once_with(
-                credentials=None,
-                credentials_file=None,
-                host=client.DEFAULT_MTLS_ENDPOINT,
-                scopes=None,
-                api_mtls_endpoint=client.DEFAULT_MTLS_ENDPOINT,
-                client_cert_source=None,
-            )
-
-    # Check the case api_endpoint is not provided, GOOGLE_API_USE_MTLS is
-    # "auto", but client_cert_source and default_client_cert_source are None.
-    os.environ["GOOGLE_API_USE_MTLS"] = "auto"
-    with mock.patch.object(transport_class, "__init__") as patched:
-        with mock.patch(
-            "google.auth.transport.mtls.has_default_client_cert_source",
-            return_value=False,
-        ):
+    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS": "never"}):
+        with mock.patch.object(transport_class, "__init__") as patched:
             patched.return_value = None
             client = client_class()
             patched.assert_called_once_with(
@@ -243,15 +195,104 @@ def test_cloud_functions_service_client_client_options(
                 scopes=None,
                 api_mtls_endpoint=client.DEFAULT_ENDPOINT,
                 client_cert_source=None,
+                quota_project_id=None,
             )
+
+    # Check the case api_endpoint is not provided and GOOGLE_API_USE_MTLS is
+    # "always".
+    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS": "always"}):
+        with mock.patch.object(transport_class, "__init__") as patched:
+            patched.return_value = None
+            client = client_class()
+            patched.assert_called_once_with(
+                credentials=None,
+                credentials_file=None,
+                host=client.DEFAULT_MTLS_ENDPOINT,
+                scopes=None,
+                api_mtls_endpoint=client.DEFAULT_MTLS_ENDPOINT,
+                client_cert_source=None,
+                quota_project_id=None,
+            )
+
+    # Check the case api_endpoint is not provided, GOOGLE_API_USE_MTLS is
+    # "auto", and client_cert_source is provided.
+    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS": "auto"}):
+        options = client_options.ClientOptions(
+            client_cert_source=client_cert_source_callback
+        )
+        with mock.patch.object(transport_class, "__init__") as patched:
+            patched.return_value = None
+            client = client_class(client_options=options)
+            patched.assert_called_once_with(
+                credentials=None,
+                credentials_file=None,
+                host=client.DEFAULT_MTLS_ENDPOINT,
+                scopes=None,
+                api_mtls_endpoint=client.DEFAULT_MTLS_ENDPOINT,
+                client_cert_source=client_cert_source_callback,
+                quota_project_id=None,
+            )
+
+    # Check the case api_endpoint is not provided, GOOGLE_API_USE_MTLS is
+    # "auto", and default_client_cert_source is provided.
+    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS": "auto"}):
+        with mock.patch.object(transport_class, "__init__") as patched:
+            with mock.patch(
+                "google.auth.transport.mtls.has_default_client_cert_source",
+                return_value=True,
+            ):
+                patched.return_value = None
+                client = client_class()
+                patched.assert_called_once_with(
+                    credentials=None,
+                    credentials_file=None,
+                    host=client.DEFAULT_MTLS_ENDPOINT,
+                    scopes=None,
+                    api_mtls_endpoint=client.DEFAULT_MTLS_ENDPOINT,
+                    client_cert_source=None,
+                    quota_project_id=None,
+                )
+
+    # Check the case api_endpoint is not provided, GOOGLE_API_USE_MTLS is
+    # "auto", but client_cert_source and default_client_cert_source are None.
+    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS": "auto"}):
+        with mock.patch.object(transport_class, "__init__") as patched:
+            with mock.patch(
+                "google.auth.transport.mtls.has_default_client_cert_source",
+                return_value=False,
+            ):
+                patched.return_value = None
+                client = client_class()
+                patched.assert_called_once_with(
+                    credentials=None,
+                    credentials_file=None,
+                    host=client.DEFAULT_ENDPOINT,
+                    scopes=None,
+                    api_mtls_endpoint=client.DEFAULT_ENDPOINT,
+                    client_cert_source=None,
+                    quota_project_id=None,
+                )
 
     # Check the case api_endpoint is not provided and GOOGLE_API_USE_MTLS has
     # unsupported value.
-    os.environ["GOOGLE_API_USE_MTLS"] = "Unsupported"
-    with pytest.raises(MutualTLSChannelError):
-        client = client_class()
+    with mock.patch.dict(os.environ, {"GOOGLE_API_USE_MTLS": "Unsupported"}):
+        with pytest.raises(MutualTLSChannelError):
+            client = client_class()
 
-    del os.environ["GOOGLE_API_USE_MTLS"]
+    # Check the case quota_project_id is provided
+    options = client_options.ClientOptions(quota_project_id="octopus")
+    with mock.patch.object(transport_class, "__init__") as patched:
+        patched.return_value = None
+        client = client_class(client_options=options)
+        patched.assert_called_once_with(
+            credentials=None,
+            credentials_file=None,
+            host=client.DEFAULT_ENDPOINT,
+            scopes=None,
+            api_mtls_endpoint=client.DEFAULT_ENDPOINT,
+            client_cert_source=None,
+            quota_project_id="octopus",
+        )
 
 
 @pytest.mark.parametrize(
@@ -284,6 +325,7 @@ def test_cloud_functions_service_client_client_options_scopes(
             scopes=["1", "2"],
             api_mtls_endpoint=client.DEFAULT_ENDPOINT,
             client_cert_source=None,
+            quota_project_id=None,
         )
 
 
@@ -317,6 +359,7 @@ def test_cloud_functions_service_client_client_options_credentials_file(
             scopes=None,
             api_mtls_endpoint=client.DEFAULT_ENDPOINT,
             client_cert_source=None,
+            quota_project_id=None,
         )
 
 
@@ -335,17 +378,20 @@ def test_cloud_functions_service_client_client_options_from_dict():
             scopes=None,
             api_mtls_endpoint="squid.clam.whelk",
             client_cert_source=None,
+            quota_project_id=None,
         )
 
 
-def test_list_functions(transport: str = "grpc"):
+def test_list_functions(
+    transport: str = "grpc", request_type=functions.ListFunctionsRequest
+):
     client = CloudFunctionsServiceClient(
         credentials=credentials.AnonymousCredentials(), transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
     # and we are mocking out the actual API, so just send an empty request.
-    request = functions.ListFunctionsRequest()
+    request = request_type()
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client._transport.list_functions), "__call__") as call:
@@ -360,7 +406,7 @@ def test_list_functions(transport: str = "grpc"):
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
 
-        assert args[0] == request
+        assert args[0] == functions.ListFunctionsRequest()
 
     # Establish that the response is the type that we expect.
     assert isinstance(response, pagers.ListFunctionsPager)
@@ -368,6 +414,10 @@ def test_list_functions(transport: str = "grpc"):
     assert response.next_page_token == "next_page_token_value"
 
     assert response.unreachable == ["unreachable_value"]
+
+
+def test_list_functions_from_dict():
+    test_list_functions(request_type=dict)
 
 
 @pytest.mark.asyncio
@@ -611,14 +661,16 @@ async def test_list_functions_async_pages():
             assert page.raw_page.next_page_token == token
 
 
-def test_get_function(transport: str = "grpc"):
+def test_get_function(
+    transport: str = "grpc", request_type=functions.GetFunctionRequest
+):
     client = CloudFunctionsServiceClient(
         credentials=credentials.AnonymousCredentials(), transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
     # and we are mocking out the actual API, so just send an empty request.
-    request = functions.GetFunctionRequest()
+    request = request_type()
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client._transport.get_function), "__call__") as call:
@@ -626,8 +678,6 @@ def test_get_function(transport: str = "grpc"):
         call.return_value = functions.CloudFunction(
             name="name_value",
             description="description_value",
-            source_archive_url="source_archive_url_value",
-            source_upload_url="source_upload_url_value",
             status=functions.CloudFunctionStatus.ACTIVE,
             entry_point="entry_point_value",
             runtime="runtime_value",
@@ -640,6 +690,8 @@ def test_get_function(transport: str = "grpc"):
             vpc_connector_egress_settings=functions.CloudFunction.VpcConnectorEgressSettings.PRIVATE_RANGES_ONLY,
             ingress_settings=functions.CloudFunction.IngressSettings.ALLOW_ALL,
             build_id="build_id_value",
+            source_archive_url="source_archive_url_value",
+            https_trigger=functions.HttpsTrigger(url="url_value"),
         )
 
         response = client.get_function(request)
@@ -648,7 +700,7 @@ def test_get_function(transport: str = "grpc"):
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
 
-        assert args[0] == request
+        assert args[0] == functions.GetFunctionRequest()
 
     # Establish that the response is the type that we expect.
     assert isinstance(response, functions.CloudFunction)
@@ -656,10 +708,6 @@ def test_get_function(transport: str = "grpc"):
     assert response.name == "name_value"
 
     assert response.description == "description_value"
-
-    assert response.source_archive_url == "source_archive_url_value"
-
-    assert response.source_upload_url == "source_upload_url_value"
 
     assert response.status == functions.CloudFunctionStatus.ACTIVE
 
@@ -691,6 +739,10 @@ def test_get_function(transport: str = "grpc"):
     assert response.build_id == "build_id_value"
 
 
+def test_get_function_from_dict():
+    test_get_function(request_type=dict)
+
+
 @pytest.mark.asyncio
 async def test_get_function_async(transport: str = "grpc_asyncio"):
     client = CloudFunctionsServiceAsyncClient(
@@ -710,8 +762,6 @@ async def test_get_function_async(transport: str = "grpc_asyncio"):
             functions.CloudFunction(
                 name="name_value",
                 description="description_value",
-                source_archive_url="source_archive_url_value",
-                source_upload_url="source_upload_url_value",
                 status=functions.CloudFunctionStatus.ACTIVE,
                 entry_point="entry_point_value",
                 runtime="runtime_value",
@@ -741,10 +791,6 @@ async def test_get_function_async(transport: str = "grpc_asyncio"):
     assert response.name == "name_value"
 
     assert response.description == "description_value"
-
-    assert response.source_archive_url == "source_archive_url_value"
-
-    assert response.source_upload_url == "source_upload_url_value"
 
     assert response.status == functions.CloudFunctionStatus.ACTIVE
 
@@ -851,6 +897,7 @@ def test_get_function_flattened():
         # request object values.
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
+
         assert args[0].name == "name_value"
 
 
@@ -891,6 +938,7 @@ async def test_get_function_flattened_async():
         # request object values.
         assert len(call.mock_calls)
         _, args, _ = call.mock_calls[0]
+
         assert args[0].name == "name_value"
 
 
@@ -908,14 +956,16 @@ async def test_get_function_flattened_error_async():
         )
 
 
-def test_create_function(transport: str = "grpc"):
+def test_create_function(
+    transport: str = "grpc", request_type=functions.CreateFunctionRequest
+):
     client = CloudFunctionsServiceClient(
         credentials=credentials.AnonymousCredentials(), transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
     # and we are mocking out the actual API, so just send an empty request.
-    request = functions.CreateFunctionRequest()
+    request = request_type()
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client._transport.create_function), "__call__") as call:
@@ -928,10 +978,14 @@ def test_create_function(transport: str = "grpc"):
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
 
-        assert args[0] == request
+        assert args[0] == functions.CreateFunctionRequest()
 
     # Establish that the response is the type that we expect.
     assert isinstance(response, future.Future)
+
+
+def test_create_function_from_dict():
+    test_create_function(request_type=dict)
 
 
 @pytest.mark.asyncio
@@ -1043,7 +1097,9 @@ def test_create_function_flattened():
         # request object values.
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
+
         assert args[0].location == "location_value"
+
         assert args[0].function == functions.CloudFunction(name="name_value")
 
 
@@ -1089,7 +1145,9 @@ async def test_create_function_flattened_async():
         # request object values.
         assert len(call.mock_calls)
         _, args, _ = call.mock_calls[0]
+
         assert args[0].location == "location_value"
+
         assert args[0].function == functions.CloudFunction(name="name_value")
 
 
@@ -1109,14 +1167,16 @@ async def test_create_function_flattened_error_async():
         )
 
 
-def test_update_function(transport: str = "grpc"):
+def test_update_function(
+    transport: str = "grpc", request_type=functions.UpdateFunctionRequest
+):
     client = CloudFunctionsServiceClient(
         credentials=credentials.AnonymousCredentials(), transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
     # and we are mocking out the actual API, so just send an empty request.
-    request = functions.UpdateFunctionRequest()
+    request = request_type()
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client._transport.update_function), "__call__") as call:
@@ -1129,10 +1189,14 @@ def test_update_function(transport: str = "grpc"):
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
 
-        assert args[0] == request
+        assert args[0] == functions.UpdateFunctionRequest()
 
     # Establish that the response is the type that we expect.
     assert isinstance(response, future.Future)
+
+
+def test_update_function_from_dict():
+    test_update_function(request_type=dict)
 
 
 @pytest.mark.asyncio
@@ -1245,6 +1309,7 @@ def test_update_function_flattened():
         # request object values.
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
+
         assert args[0].function == functions.CloudFunction(name="name_value")
 
 
@@ -1288,6 +1353,7 @@ async def test_update_function_flattened_async():
         # request object values.
         assert len(call.mock_calls)
         _, args, _ = call.mock_calls[0]
+
         assert args[0].function == functions.CloudFunction(name="name_value")
 
 
@@ -1306,14 +1372,16 @@ async def test_update_function_flattened_error_async():
         )
 
 
-def test_delete_function(transport: str = "grpc"):
+def test_delete_function(
+    transport: str = "grpc", request_type=functions.DeleteFunctionRequest
+):
     client = CloudFunctionsServiceClient(
         credentials=credentials.AnonymousCredentials(), transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
     # and we are mocking out the actual API, so just send an empty request.
-    request = functions.DeleteFunctionRequest()
+    request = request_type()
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client._transport.delete_function), "__call__") as call:
@@ -1326,10 +1394,14 @@ def test_delete_function(transport: str = "grpc"):
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
 
-        assert args[0] == request
+        assert args[0] == functions.DeleteFunctionRequest()
 
     # Establish that the response is the type that we expect.
     assert isinstance(response, future.Future)
+
+
+def test_delete_function_from_dict():
+    test_delete_function(request_type=dict)
 
 
 @pytest.mark.asyncio
@@ -1438,6 +1510,7 @@ def test_delete_function_flattened():
         # request object values.
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
+
         assert args[0].name == "name_value"
 
 
@@ -1478,6 +1551,7 @@ async def test_delete_function_flattened_async():
         # request object values.
         assert len(call.mock_calls)
         _, args, _ = call.mock_calls[0]
+
         assert args[0].name == "name_value"
 
 
@@ -1495,14 +1569,16 @@ async def test_delete_function_flattened_error_async():
         )
 
 
-def test_call_function(transport: str = "grpc"):
+def test_call_function(
+    transport: str = "grpc", request_type=functions.CallFunctionRequest
+):
     client = CloudFunctionsServiceClient(
         credentials=credentials.AnonymousCredentials(), transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
     # and we are mocking out the actual API, so just send an empty request.
-    request = functions.CallFunctionRequest()
+    request = request_type()
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client._transport.call_function), "__call__") as call:
@@ -1519,7 +1595,7 @@ def test_call_function(transport: str = "grpc"):
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
 
-        assert args[0] == request
+        assert args[0] == functions.CallFunctionRequest()
 
     # Establish that the response is the type that we expect.
     assert isinstance(response, functions.CallFunctionResponse)
@@ -1529,6 +1605,10 @@ def test_call_function(transport: str = "grpc"):
     assert response.result == "result_value"
 
     assert response.error == "error_value"
+
+
+def test_call_function_from_dict():
+    test_call_function(request_type=dict)
 
 
 @pytest.mark.asyncio
@@ -1649,7 +1729,9 @@ def test_call_function_flattened():
         # request object values.
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
+
         assert args[0].name == "name_value"
+
         assert args[0].data == "data_value"
 
 
@@ -1690,7 +1772,9 @@ async def test_call_function_flattened_async():
         # request object values.
         assert len(call.mock_calls)
         _, args, _ = call.mock_calls[0]
+
         assert args[0].name == "name_value"
+
         assert args[0].data == "data_value"
 
 
@@ -1708,14 +1792,16 @@ async def test_call_function_flattened_error_async():
         )
 
 
-def test_generate_upload_url(transport: str = "grpc"):
+def test_generate_upload_url(
+    transport: str = "grpc", request_type=functions.GenerateUploadUrlRequest
+):
     client = CloudFunctionsServiceClient(
         credentials=credentials.AnonymousCredentials(), transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
     # and we are mocking out the actual API, so just send an empty request.
-    request = functions.GenerateUploadUrlRequest()
+    request = request_type()
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -1732,12 +1818,16 @@ def test_generate_upload_url(transport: str = "grpc"):
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
 
-        assert args[0] == request
+        assert args[0] == functions.GenerateUploadUrlRequest()
 
     # Establish that the response is the type that we expect.
     assert isinstance(response, functions.GenerateUploadUrlResponse)
 
     assert response.upload_url == "upload_url_value"
+
+
+def test_generate_upload_url_from_dict():
+    test_generate_upload_url(request_type=dict)
 
 
 @pytest.mark.asyncio
@@ -1832,14 +1922,16 @@ async def test_generate_upload_url_field_headers_async():
     assert ("x-goog-request-params", "parent=parent/value",) in kw["metadata"]
 
 
-def test_generate_download_url(transport: str = "grpc"):
+def test_generate_download_url(
+    transport: str = "grpc", request_type=functions.GenerateDownloadUrlRequest
+):
     client = CloudFunctionsServiceClient(
         credentials=credentials.AnonymousCredentials(), transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
     # and we are mocking out the actual API, so just send an empty request.
-    request = functions.GenerateDownloadUrlRequest()
+    request = request_type()
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -1856,12 +1948,16 @@ def test_generate_download_url(transport: str = "grpc"):
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
 
-        assert args[0] == request
+        assert args[0] == functions.GenerateDownloadUrlRequest()
 
     # Establish that the response is the type that we expect.
     assert isinstance(response, functions.GenerateDownloadUrlResponse)
 
     assert response.download_url == "download_url_value"
+
+
+def test_generate_download_url_from_dict():
+    test_generate_download_url(request_type=dict)
 
 
 @pytest.mark.asyncio
@@ -1956,14 +2052,16 @@ async def test_generate_download_url_field_headers_async():
     assert ("x-goog-request-params", "name=name/value",) in kw["metadata"]
 
 
-def test_set_iam_policy(transport: str = "grpc"):
+def test_set_iam_policy(
+    transport: str = "grpc", request_type=iam_policy.SetIamPolicyRequest
+):
     client = CloudFunctionsServiceClient(
         credentials=credentials.AnonymousCredentials(), transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
     # and we are mocking out the actual API, so just send an empty request.
-    request = iam_policy.SetIamPolicyRequest()
+    request = request_type()
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client._transport.set_iam_policy), "__call__") as call:
@@ -1976,7 +2074,7 @@ def test_set_iam_policy(transport: str = "grpc"):
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
 
-        assert args[0] == request
+        assert args[0] == iam_policy.SetIamPolicyRequest()
 
     # Establish that the response is the type that we expect.
     assert isinstance(response, policy.Policy)
@@ -1984,6 +2082,10 @@ def test_set_iam_policy(transport: str = "grpc"):
     assert response.version == 774
 
     assert response.etag == b"etag_blob"
+
+
+def test_set_iam_policy_from_dict():
+    test_set_iam_policy(request_type=dict)
 
 
 @pytest.mark.asyncio
@@ -2094,14 +2196,16 @@ def test_set_iam_policy_from_dict():
         call.assert_called()
 
 
-def test_get_iam_policy(transport: str = "grpc"):
+def test_get_iam_policy(
+    transport: str = "grpc", request_type=iam_policy.GetIamPolicyRequest
+):
     client = CloudFunctionsServiceClient(
         credentials=credentials.AnonymousCredentials(), transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
     # and we are mocking out the actual API, so just send an empty request.
-    request = iam_policy.GetIamPolicyRequest()
+    request = request_type()
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client._transport.get_iam_policy), "__call__") as call:
@@ -2114,7 +2218,7 @@ def test_get_iam_policy(transport: str = "grpc"):
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
 
-        assert args[0] == request
+        assert args[0] == iam_policy.GetIamPolicyRequest()
 
     # Establish that the response is the type that we expect.
     assert isinstance(response, policy.Policy)
@@ -2122,6 +2226,10 @@ def test_get_iam_policy(transport: str = "grpc"):
     assert response.version == 774
 
     assert response.etag == b"etag_blob"
+
+
+def test_get_iam_policy_from_dict():
+    test_get_iam_policy(request_type=dict)
 
 
 @pytest.mark.asyncio
@@ -2232,14 +2340,16 @@ def test_get_iam_policy_from_dict():
         call.assert_called()
 
 
-def test_test_iam_permissions(transport: str = "grpc"):
+def test_test_iam_permissions(
+    transport: str = "grpc", request_type=iam_policy.TestIamPermissionsRequest
+):
     client = CloudFunctionsServiceClient(
         credentials=credentials.AnonymousCredentials(), transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
     # and we are mocking out the actual API, so just send an empty request.
-    request = iam_policy.TestIamPermissionsRequest()
+    request = request_type()
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -2256,12 +2366,16 @@ def test_test_iam_permissions(transport: str = "grpc"):
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
 
-        assert args[0] == request
+        assert args[0] == iam_policy.TestIamPermissionsRequest()
 
     # Establish that the response is the type that we expect.
     assert isinstance(response, iam_policy.TestIamPermissionsResponse)
 
     assert response.permissions == ["permissions_value"]
+
+
+def test_test_iam_permissions_from_dict():
+    test_test_iam_permissions(request_type=dict)
 
 
 @pytest.mark.asyncio
@@ -2449,9 +2563,13 @@ def test_cloud_functions_service_base_transport_error():
 
 def test_cloud_functions_service_base_transport():
     # Instantiate the base transport.
-    transport = transports.CloudFunctionsServiceTransport(
-        credentials=credentials.AnonymousCredentials(),
-    )
+    with mock.patch(
+        "google.cloud.functions_v1.services.cloud_functions_service.transports.CloudFunctionsServiceTransport.__init__"
+    ) as Transport:
+        Transport.return_value = None
+        transport = transports.CloudFunctionsServiceTransport(
+            credentials=credentials.AnonymousCredentials(),
+        )
 
     # Every method on the transport should just blindly
     # raise NotImplementedError.
@@ -2480,14 +2598,20 @@ def test_cloud_functions_service_base_transport():
 
 def test_cloud_functions_service_base_transport_with_credentials_file():
     # Instantiate the base transport with a credentials file
-    with mock.patch.object(auth, "load_credentials_from_file") as load_creds:
+    with mock.patch.object(
+        auth, "load_credentials_from_file"
+    ) as load_creds, mock.patch(
+        "google.cloud.functions_v1.services.cloud_functions_service.transports.CloudFunctionsServiceTransport._prep_wrapped_messages"
+    ) as Transport:
+        Transport.return_value = None
         load_creds.return_value = (credentials.AnonymousCredentials(), None)
         transport = transports.CloudFunctionsServiceTransport(
-            credentials_file="credentials.json",
+            credentials_file="credentials.json", quota_project_id="octopus",
         )
         load_creds.assert_called_once_with(
             "credentials.json",
             scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            quota_project_id="octopus",
         )
 
 
@@ -2497,7 +2621,8 @@ def test_cloud_functions_service_auth_adc():
         adc.return_value = (credentials.AnonymousCredentials(), None)
         CloudFunctionsServiceClient()
         adc.assert_called_once_with(
-            scopes=("https://www.googleapis.com/auth/cloud-platform",)
+            scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            quota_project_id=None,
         )
 
 
@@ -2506,9 +2631,12 @@ def test_cloud_functions_service_transport_auth_adc():
     # ADC credentials.
     with mock.patch.object(auth, "default") as adc:
         adc.return_value = (credentials.AnonymousCredentials(), None)
-        transports.CloudFunctionsServiceGrpcTransport(host="squid.clam.whelk")
+        transports.CloudFunctionsServiceGrpcTransport(
+            host="squid.clam.whelk", quota_project_id="octopus"
+        )
         adc.assert_called_once_with(
-            scopes=("https://www.googleapis.com/auth/cloud-platform",)
+            scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            quota_project_id="octopus",
         )
 
 
@@ -2596,6 +2724,7 @@ def test_cloud_functions_service_grpc_transport_channel_mtls_with_client_cert_so
         credentials_file=None,
         scopes=("https://www.googleapis.com/auth/cloud-platform",),
         ssl_credentials=mock_ssl_cred,
+        quota_project_id=None,
     )
     assert transport.grpc_channel == mock_grpc_channel
 
@@ -2630,6 +2759,7 @@ def test_cloud_functions_service_grpc_asyncio_transport_channel_mtls_with_client
         credentials_file=None,
         scopes=("https://www.googleapis.com/auth/cloud-platform",),
         ssl_credentials=mock_ssl_cred,
+        quota_project_id=None,
     )
     assert transport.grpc_channel == mock_grpc_channel
 
@@ -2666,6 +2796,7 @@ def test_cloud_functions_service_grpc_transport_channel_mtls_with_adc(
             credentials_file=None,
             scopes=("https://www.googleapis.com/auth/cloud-platform",),
             ssl_credentials=mock_ssl_cred,
+            quota_project_id=None,
         )
         assert transport.grpc_channel == mock_grpc_channel
 
@@ -2702,6 +2833,7 @@ def test_cloud_functions_service_grpc_asyncio_transport_channel_mtls_with_adc(
             credentials_file=None,
             scopes=("https://www.googleapis.com/auth/cloud-platform",),
             ssl_credentials=mock_ssl_cred,
+            quota_project_id=None,
         )
         assert transport.grpc_channel == mock_grpc_channel
 

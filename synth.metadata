@@ -3,7 +3,16 @@
     {
       "git": {
         "name": ".",
-        "remote": "sso://devrel/cloud/libraries/python/python-functions"
+        "remote": "https://github.com/googleapis/python-functions.git",
+        "sha": "00736486393eeb2ac606e5fc1bb2d0ec31fddced"
+      }
+    },
+    {
+      "git": {
+        "name": "googleapis",
+        "remote": "https://github.com/googleapis/googleapis.git",
+        "sha": "fbf9396664b766a08d92da9d4f31be019a847c39",
+        "internalRef": "324209019"
       }
     },
     {

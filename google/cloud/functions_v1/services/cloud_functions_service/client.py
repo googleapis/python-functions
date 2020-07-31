@@ -243,6 +243,7 @@ class CloudFunctionsServiceClient(metaclass=CloudFunctionsServiceClientMeta):
                 scopes=client_options.scopes,
                 api_mtls_endpoint=client_options.api_endpoint,
                 client_cert_source=client_options.client_cert_source,
+                quota_project_id=client_options.quota_project_id,
             )
 
     def list_functions(
@@ -277,15 +278,16 @@ class CloudFunctionsServiceClient(metaclass=CloudFunctionsServiceClientMeta):
         """
         # Create or coerce a protobuf request object.
 
-        request = functions.ListFunctionsRequest(request)
+        # Minor optimization to avoid making a copy if the user passes
+        # in a functions.ListFunctionsRequest.
+        # There's no risk of modifying the input as we've already verified
+        # there are no flattened fields.
+        if not isinstance(request, functions.ListFunctionsRequest):
+            request = functions.ListFunctionsRequest(request)
 
         # Wrap the RPC method; this adds retry and timeout information,
         # and friendly error handling.
-        rpc = gapic_v1.method.wrap_method(
-            self._transport.list_functions,
-            default_timeout=None,
-            client_info=_client_info,
-        )
+        rpc = self._transport._wrapped_methods[self._transport.list_functions]
 
         # Certain fields should be provided within the metadata header;
         # add these here.
@@ -345,27 +347,29 @@ class CloudFunctionsServiceClient(metaclass=CloudFunctionsServiceClientMeta):
         # Create or coerce a protobuf request object.
         # Sanity check: If we got a request object, we should *not* have
         # gotten any keyword arguments that map to the request.
-        if request is not None and any([name]):
+        has_flattened_params = any([name])
+        if request is not None and has_flattened_params:
             raise ValueError(
                 "If the `request` argument is set, then none of "
                 "the individual field arguments should be set."
             )
 
-        request = functions.GetFunctionRequest(request)
+        # Minor optimization to avoid making a copy if the user passes
+        # in a functions.GetFunctionRequest.
+        # There's no risk of modifying the input as we've already verified
+        # there are no flattened fields.
+        if not isinstance(request, functions.GetFunctionRequest):
+            request = functions.GetFunctionRequest(request)
 
-        # If we have keyword arguments corresponding to fields on the
-        # request, apply these.
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
 
-        if name is not None:
-            request.name = name
+            if name is not None:
+                request.name = name
 
         # Wrap the RPC method; this adds retry and timeout information,
         # and friendly error handling.
-        rpc = gapic_v1.method.wrap_method(
-            self._transport.get_function,
-            default_timeout=None,
-            client_info=_client_info,
-        )
+        rpc = self._transport._wrapped_methods[self._transport.get_function]
 
         # Certain fields should be provided within the metadata header;
         # add these here.
@@ -430,29 +434,31 @@ class CloudFunctionsServiceClient(metaclass=CloudFunctionsServiceClientMeta):
         # Create or coerce a protobuf request object.
         # Sanity check: If we got a request object, we should *not* have
         # gotten any keyword arguments that map to the request.
-        if request is not None and any([location, function]):
+        has_flattened_params = any([location, function])
+        if request is not None and has_flattened_params:
             raise ValueError(
                 "If the `request` argument is set, then none of "
                 "the individual field arguments should be set."
             )
 
-        request = functions.CreateFunctionRequest(request)
+        # Minor optimization to avoid making a copy if the user passes
+        # in a functions.CreateFunctionRequest.
+        # There's no risk of modifying the input as we've already verified
+        # there are no flattened fields.
+        if not isinstance(request, functions.CreateFunctionRequest):
+            request = functions.CreateFunctionRequest(request)
 
-        # If we have keyword arguments corresponding to fields on the
-        # request, apply these.
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
 
-        if location is not None:
-            request.location = location
-        if function is not None:
-            request.function = function
+            if location is not None:
+                request.location = location
+            if function is not None:
+                request.function = function
 
         # Wrap the RPC method; this adds retry and timeout information,
         # and friendly error handling.
-        rpc = gapic_v1.method.wrap_method(
-            self._transport.create_function,
-            default_timeout=None,
-            client_info=_client_info,
-        )
+        rpc = self._transport._wrapped_methods[self._transport.create_function]
 
         # Certain fields should be provided within the metadata header;
         # add these here.
@@ -516,27 +522,29 @@ class CloudFunctionsServiceClient(metaclass=CloudFunctionsServiceClientMeta):
         # Create or coerce a protobuf request object.
         # Sanity check: If we got a request object, we should *not* have
         # gotten any keyword arguments that map to the request.
-        if request is not None and any([function]):
+        has_flattened_params = any([function])
+        if request is not None and has_flattened_params:
             raise ValueError(
                 "If the `request` argument is set, then none of "
                 "the individual field arguments should be set."
             )
 
-        request = functions.UpdateFunctionRequest(request)
+        # Minor optimization to avoid making a copy if the user passes
+        # in a functions.UpdateFunctionRequest.
+        # There's no risk of modifying the input as we've already verified
+        # there are no flattened fields.
+        if not isinstance(request, functions.UpdateFunctionRequest):
+            request = functions.UpdateFunctionRequest(request)
 
-        # If we have keyword arguments corresponding to fields on the
-        # request, apply these.
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
 
-        if function is not None:
-            request.function = function
+            if function is not None:
+                request.function = function
 
         # Wrap the RPC method; this adds retry and timeout information,
         # and friendly error handling.
-        rpc = gapic_v1.method.wrap_method(
-            self._transport.update_function,
-            default_timeout=None,
-            client_info=_client_info,
-        )
+        rpc = self._transport._wrapped_methods[self._transport.update_function]
 
         # Certain fields should be provided within the metadata header;
         # add these here.
@@ -615,27 +623,29 @@ class CloudFunctionsServiceClient(metaclass=CloudFunctionsServiceClientMeta):
         # Create or coerce a protobuf request object.
         # Sanity check: If we got a request object, we should *not* have
         # gotten any keyword arguments that map to the request.
-        if request is not None and any([name]):
+        has_flattened_params = any([name])
+        if request is not None and has_flattened_params:
             raise ValueError(
                 "If the `request` argument is set, then none of "
                 "the individual field arguments should be set."
             )
 
-        request = functions.DeleteFunctionRequest(request)
+        # Minor optimization to avoid making a copy if the user passes
+        # in a functions.DeleteFunctionRequest.
+        # There's no risk of modifying the input as we've already verified
+        # there are no flattened fields.
+        if not isinstance(request, functions.DeleteFunctionRequest):
+            request = functions.DeleteFunctionRequest(request)
 
-        # If we have keyword arguments corresponding to fields on the
-        # request, apply these.
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
 
-        if name is not None:
-            request.name = name
+            if name is not None:
+                request.name = name
 
         # Wrap the RPC method; this adds retry and timeout information,
         # and friendly error handling.
-        rpc = gapic_v1.method.wrap_method(
-            self._transport.delete_function,
-            default_timeout=None,
-            client_info=_client_info,
-        )
+        rpc = self._transport._wrapped_methods[self._transport.delete_function]
 
         # Certain fields should be provided within the metadata header;
         # add these here.
@@ -702,29 +712,31 @@ class CloudFunctionsServiceClient(metaclass=CloudFunctionsServiceClientMeta):
         # Create or coerce a protobuf request object.
         # Sanity check: If we got a request object, we should *not* have
         # gotten any keyword arguments that map to the request.
-        if request is not None and any([name, data]):
+        has_flattened_params = any([name, data])
+        if request is not None and has_flattened_params:
             raise ValueError(
                 "If the `request` argument is set, then none of "
                 "the individual field arguments should be set."
             )
 
-        request = functions.CallFunctionRequest(request)
+        # Minor optimization to avoid making a copy if the user passes
+        # in a functions.CallFunctionRequest.
+        # There's no risk of modifying the input as we've already verified
+        # there are no flattened fields.
+        if not isinstance(request, functions.CallFunctionRequest):
+            request = functions.CallFunctionRequest(request)
 
-        # If we have keyword arguments corresponding to fields on the
-        # request, apply these.
+            # If we have keyword arguments corresponding to fields on the
+            # request, apply these.
 
-        if name is not None:
-            request.name = name
-        if data is not None:
-            request.data = data
+            if name is not None:
+                request.name = name
+            if data is not None:
+                request.data = data
 
         # Wrap the RPC method; this adds retry and timeout information,
         # and friendly error handling.
-        rpc = gapic_v1.method.wrap_method(
-            self._transport.call_function,
-            default_timeout=None,
-            client_info=_client_info,
-        )
+        rpc = self._transport._wrapped_methods[self._transport.call_function]
 
         # Certain fields should be provided within the metadata header;
         # add these here.
@@ -792,15 +804,16 @@ class CloudFunctionsServiceClient(metaclass=CloudFunctionsServiceClientMeta):
         """
         # Create or coerce a protobuf request object.
 
-        request = functions.GenerateUploadUrlRequest(request)
+        # Minor optimization to avoid making a copy if the user passes
+        # in a functions.GenerateUploadUrlRequest.
+        # There's no risk of modifying the input as we've already verified
+        # there are no flattened fields.
+        if not isinstance(request, functions.GenerateUploadUrlRequest):
+            request = functions.GenerateUploadUrlRequest(request)
 
         # Wrap the RPC method; this adds retry and timeout information,
         # and friendly error handling.
-        rpc = gapic_v1.method.wrap_method(
-            self._transport.generate_upload_url,
-            default_timeout=None,
-            client_info=_client_info,
-        )
+        rpc = self._transport._wrapped_methods[self._transport.generate_upload_url]
 
         # Certain fields should be provided within the metadata header;
         # add these here.
@@ -847,15 +860,16 @@ class CloudFunctionsServiceClient(metaclass=CloudFunctionsServiceClientMeta):
         """
         # Create or coerce a protobuf request object.
 
-        request = functions.GenerateDownloadUrlRequest(request)
+        # Minor optimization to avoid making a copy if the user passes
+        # in a functions.GenerateDownloadUrlRequest.
+        # There's no risk of modifying the input as we've already verified
+        # there are no flattened fields.
+        if not isinstance(request, functions.GenerateDownloadUrlRequest):
+            request = functions.GenerateDownloadUrlRequest(request)
 
         # Wrap the RPC method; this adds retry and timeout information,
         # and friendly error handling.
-        rpc = gapic_v1.method.wrap_method(
-            self._transport.generate_download_url,
-            default_timeout=None,
-            client_info=_client_info,
-        )
+        rpc = self._transport._wrapped_methods[self._transport.generate_download_url]
 
         # Certain fields should be provided within the metadata header;
         # add these here.
@@ -969,11 +983,7 @@ class CloudFunctionsServiceClient(metaclass=CloudFunctionsServiceClientMeta):
 
         # Wrap the RPC method; this adds retry and timeout information,
         # and friendly error handling.
-        rpc = gapic_v1.method.wrap_method(
-            self._transport.set_iam_policy,
-            default_timeout=None,
-            client_info=_client_info,
-        )
+        rpc = self._transport._wrapped_methods[self._transport.set_iam_policy]
 
         # Certain fields should be provided within the metadata header;
         # add these here.
@@ -1088,11 +1098,7 @@ class CloudFunctionsServiceClient(metaclass=CloudFunctionsServiceClientMeta):
 
         # Wrap the RPC method; this adds retry and timeout information,
         # and friendly error handling.
-        rpc = gapic_v1.method.wrap_method(
-            self._transport.get_iam_policy,
-            default_timeout=None,
-            client_info=_client_info,
-        )
+        rpc = self._transport._wrapped_methods[self._transport.get_iam_policy]
 
         # Certain fields should be provided within the metadata header;
         # add these here.
@@ -1142,11 +1148,7 @@ class CloudFunctionsServiceClient(metaclass=CloudFunctionsServiceClientMeta):
 
         # Wrap the RPC method; this adds retry and timeout information,
         # and friendly error handling.
-        rpc = gapic_v1.method.wrap_method(
-            self._transport.test_iam_permissions,
-            default_timeout=None,
-            client_info=_client_info,
-        )
+        rpc = self._transport._wrapped_methods[self._transport.test_iam_permissions]
 
         # Certain fields should be provided within the metadata header;
         # add these here.
