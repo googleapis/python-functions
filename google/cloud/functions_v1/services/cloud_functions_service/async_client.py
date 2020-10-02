@@ -28,8 +28,8 @@ from google.api_core import retry as retries  # type: ignore
 from google.auth import credentials  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
-from google.api_core import operation
-from google.api_core import operation_async
+from google.api_core import operation  # type: ignore
+from google.api_core import operation_async  # type: ignore
 from google.cloud.functions_v1.services.cloud_functions_service import pagers
 from google.cloud.functions_v1.types import functions
 from google.cloud.functions_v1.types import operations
