@@ -4,7 +4,7 @@
       "git": {
         "name": ".",
         "remote": "https://github.com/googleapis/python-functions.git",
-        "sha": "6ef79767921676ef825fbac52fee5fdbec75d5e1"
+        "sha": "bdb2f5093ed82a88ce769d72a1c6bc0643f3644c"
       }
     },
     {
@@ -19,14 +19,14 @@
       "git": {
         "name": "synthtool",
         "remote": "https://github.com/googleapis/synthtool.git",
-        "sha": "f94318521f63085b9ccb43d42af89f153fb39f15"
+        "sha": "aa255b15d52b6d8950cca48cfdf58f7d27a60c8a"
       }
     },
     {
       "git": {
         "name": "synthtool",
         "remote": "https://github.com/googleapis/synthtool.git",
-        "sha": "f94318521f63085b9ccb43d42af89f153fb39f15"
+        "sha": "aa255b15d52b6d8950cca48cfdf58f7d27a60c8a"
       }
     }
   ],
