@@ -4,7 +4,7 @@
       "git": {
         "name": ".",
         "remote": "https://github.com/googleapis/python-functions.git",
-        "sha": "b0222c231a7aeed49324e3d3e88a75ea9bbef93d"
+        "sha": "f9d4d8f1366587b3bdee06ab81ee5ff23ca67bc2"
       }
     },
     {
