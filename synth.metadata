@@ -4,7 +4,7 @@
       "git": {
         "name": ".",
         "remote": "https://github.com/googleapis/python-functions.git",
-        "sha": "f9d4d8f1366587b3bdee06ab81ee5ff23ca67bc2"
+        "sha": "89cc136405cc79c3df3dbc361cd4ffc25119ae18"
       }
     },
     {
@@ -98,7 +98,6 @@
     "docs/functions_v1/services.rst",
     "docs/functions_v1/types.rst",
     "docs/multiprocessing.rst",
-    "functions-v1-py.tar.gz",
     "google/cloud/functions/__init__.py",
     "google/cloud/functions/py.typed",
     "google/cloud/functions_v1/__init__.py",
