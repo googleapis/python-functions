@@ -24,7 +24,7 @@ class ListFunctionsPager:
     """A pager for iterating through ``list_functions`` requests.
 
     This class thinly wraps an initial
-    :class:`~.functions.ListFunctionsResponse` object, and
+    :class:`google.cloud.functions_v1.types.ListFunctionsResponse` object, and
     provides an ``__iter__`` method to iterate through its
     ``functions`` field.
 
@@ -33,7 +33,7 @@ class ListFunctionsPager:
     through the ``functions`` field on the
     corresponding responses.
 
-    All the usual :class:`~.functions.ListFunctionsResponse`
+    All the usual :class:`google.cloud.functions_v1.types.ListFunctionsResponse`
     attributes are available on the pager. If multiple requests are made, only
     the most recent response is retained, and thus used for attribute lookup.
     """
@@ -51,9 +51,9 @@ class ListFunctionsPager:
         Args:
             method (Callable): The method that was originally called, and
                 which instantiated this pager.
-            request (:class:`~.functions.ListFunctionsRequest`):
+            request (google.cloud.functions_v1.types.ListFunctionsRequest):
                 The initial request object.
-            response (:class:`~.functions.ListFunctionsResponse`):
+            response (google.cloud.functions_v1.types.ListFunctionsResponse):
                 The initial response object.
             metadata (Sequence[Tuple[str, str]]): Strings which should be
                 sent along with the request as metadata.
@@ -86,7 +86,7 @@ class ListFunctionsAsyncPager:
     """A pager for iterating through ``list_functions`` requests.
 
     This class thinly wraps an initial
-    :class:`~.functions.ListFunctionsResponse` object, and
+    :class:`google.cloud.functions_v1.types.ListFunctionsResponse` object, and
     provides an ``__aiter__`` method to iterate through its
     ``functions`` field.
 
@@ -95,7 +95,7 @@ class ListFunctionsAsyncPager:
     through the ``functions`` field on the
     corresponding responses.
 
-    All the usual :class:`~.functions.ListFunctionsResponse`
+    All the usual :class:`google.cloud.functions_v1.types.ListFunctionsResponse`
     attributes are available on the pager. If multiple requests are made, only
     the most recent response is retained, and thus used for attribute lookup.
     """
@@ -113,9 +113,9 @@ class ListFunctionsAsyncPager:
         Args:
             method (Callable): The method that was originally called, and
                 which instantiated this pager.
-            request (:class:`~.functions.ListFunctionsRequest`):
+            request (google.cloud.functions_v1.types.ListFunctionsRequest):
                 The initial request object.
-            response (:class:`~.functions.ListFunctionsResponse`):
+            response (google.cloud.functions_v1.types.ListFunctionsResponse):
                 The initial response object.
             metadata (Sequence[Tuple[str, str]]): Strings which should be
                 sent along with the request as metadata.

@@ -4,15 +4,15 @@
       "git": {
         "name": ".",
         "remote": "https://github.com/googleapis/python-functions.git",
-        "sha": "f9d4d8f1366587b3bdee06ab81ee5ff23ca67bc2"
+        "sha": "89cc136405cc79c3df3dbc361cd4ffc25119ae18"
       }
     },
     {
       "git": {
         "name": "googleapis",
         "remote": "https://github.com/googleapis/googleapis.git",
-        "sha": "dd372aa22ded7a8ba6f0e03a80e06358a3fa0907",
-        "internalRef": "347055288"
+        "sha": "20712b8fe95001b312f62c6c5f33e3e3ec92cfaf",
+        "internalRef": "354996675"
       }
     },
     {
@@ -42,6 +42,7 @@
     }
   ],
   "generatedFiles": [
+    ".coveragerc",
     ".flake8",
     ".github/CONTRIBUTING.md",
     ".github/ISSUE_TEMPLATE/bug_report.md",
@@ -95,10 +96,10 @@
     "docs/_static/custom.css",
     "docs/_templates/layout.html",
     "docs/conf.py",
+    "docs/functions_v1/cloud_functions_service.rst",
     "docs/functions_v1/services.rst",
     "docs/functions_v1/types.rst",
     "docs/multiprocessing.rst",
-    "functions-v1-py.tar.gz",
     "google/cloud/functions/__init__.py",
     "google/cloud/functions/py.typed",
     "google/cloud/functions_v1/__init__.py",
