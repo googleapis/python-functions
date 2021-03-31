@@ -109,22 +109,62 @@ class CloudFunctionsServiceTransport(abc.ABC):
         # Precompute the wrapped methods.
         self._wrapped_methods = {
             self.list_functions: gapic_v1.method.wrap_method(
-                self.list_functions, default_timeout=None, client_info=client_info,
+                self.list_functions,
+                default_retry=retries.Retry(
+                    initial=0.1,
+                    maximum=60.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        exceptions.DeadlineExceeded, exceptions.ServiceUnavailable,
+                    ),
+                ),
+                default_timeout=600.0,
+                client_info=client_info,
             ),
             self.get_function: gapic_v1.method.wrap_method(
-                self.get_function, default_timeout=None, client_info=client_info,
+                self.get_function,
+                default_retry=retries.Retry(
+                    initial=0.1,
+                    maximum=60.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        exceptions.DeadlineExceeded, exceptions.ServiceUnavailable,
+                    ),
+                ),
+                default_timeout=600.0,
+                client_info=client_info,
             ),
             self.create_function: gapic_v1.method.wrap_method(
-                self.create_function, default_timeout=None, client_info=client_info,
+                self.create_function, default_timeout=600.0, client_info=client_info,
             ),
             self.update_function: gapic_v1.method.wrap_method(
-                self.update_function, default_timeout=None, client_info=client_info,
+                self.update_function,
+                default_retry=retries.Retry(
+                    initial=0.1,
+                    maximum=60.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        exceptions.DeadlineExceeded, exceptions.ServiceUnavailable,
+                    ),
+                ),
+                default_timeout=600.0,
+                client_info=client_info,
             ),
             self.delete_function: gapic_v1.method.wrap_method(
-                self.delete_function, default_timeout=None, client_info=client_info,
+                self.delete_function,
+                default_retry=retries.Retry(
+                    initial=0.1,
+                    maximum=60.0,
+                    multiplier=1.3,
+                    predicate=retries.if_exception_type(
+                        exceptions.DeadlineExceeded, exceptions.ServiceUnavailable,
+                    ),
+                ),
+                default_timeout=600.0,
+                client_info=client_info,
             ),
             self.call_function: gapic_v1.method.wrap_method(
-                self.call_function, default_timeout=None, client_info=client_info,
+                self.call_function, default_timeout=600.0, client_info=client_info,
             ),
             self.generate_upload_url: gapic_v1.method.wrap_method(
                 self.generate_upload_url, default_timeout=None, client_info=client_info,
