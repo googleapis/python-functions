@@ -11,8 +11,8 @@
       "git": {
         "name": "googleapis",
         "remote": "https://github.com/googleapis/googleapis.git",
-        "sha": "149a3a84c29c9b8189576c7442ccb6dcf6a8f95b",
-        "internalRef": "364411656"
+        "sha": "95dd24960cf9f794ef583e59ad9f1fabe1c4a924",
+        "internalRef": "365882072"
       }
     },
     {
@@ -100,6 +100,7 @@
     "docs/functions_v1/services.rst",
     "docs/functions_v1/types.rst",
     "docs/multiprocessing.rst",
+    "functions-v1-py.tar.gz",
     "google/cloud/functions/__init__.py",
     "google/cloud/functions/py.typed",
     "google/cloud/functions_v1/__init__.py",
