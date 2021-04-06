@@ -29,7 +29,7 @@ import grpc  # type: ignore
 
 from google.cloud.functions_v1.types import functions
 from google.iam.v1 import iam_policy_pb2 as iam_policy  # type: ignore
-from google.iam.v1 import policy_pb2 as policy  # type: ignore
+from google.iam.v1 import policy_pb2 as gi_policy  # type: ignore
 from google.longrunning import operations_pb2 as operations  # type: ignore
 
 from .base import CloudFunctionsServiceTransport, DEFAULT_CLIENT_INFO
@@ -499,7 +499,7 @@ class CloudFunctionsServiceGrpcTransport(CloudFunctionsServiceTransport):
     @property
     def set_iam_policy(
         self,
-    ) -> Callable[[iam_policy.SetIamPolicyRequest], policy.Policy]:
+    ) -> Callable[[iam_policy.SetIamPolicyRequest], gi_policy.Policy]:
         r"""Return a callable for the set iam policy method over gRPC.
 
         Sets the IAM access control policy on the specified
@@ -519,14 +519,14 @@ class CloudFunctionsServiceGrpcTransport(CloudFunctionsServiceTransport):
             self._stubs["set_iam_policy"] = self.grpc_channel.unary_unary(
                 "/google.cloud.functions.v1.CloudFunctionsService/SetIamPolicy",
                 request_serializer=iam_policy.SetIamPolicyRequest.SerializeToString,
-                response_deserializer=policy.Policy.FromString,
+                response_deserializer=gi_policy.Policy.FromString,
             )
         return self._stubs["set_iam_policy"]
 
     @property
     def get_iam_policy(
         self,
-    ) -> Callable[[iam_policy.GetIamPolicyRequest], policy.Policy]:
+    ) -> Callable[[iam_policy.GetIamPolicyRequest], gi_policy.Policy]:
         r"""Return a callable for the get iam policy method over gRPC.
 
         Gets the IAM access control policy for a function.
@@ -547,7 +547,7 @@ class CloudFunctionsServiceGrpcTransport(CloudFunctionsServiceTransport):
             self._stubs["get_iam_policy"] = self.grpc_channel.unary_unary(
                 "/google.cloud.functions.v1.CloudFunctionsService/GetIamPolicy",
                 request_serializer=iam_policy.GetIamPolicyRequest.SerializeToString,
-                response_deserializer=policy.Policy.FromString,
+                response_deserializer=gi_policy.Policy.FromString,
             )
         return self._stubs["get_iam_policy"]
 

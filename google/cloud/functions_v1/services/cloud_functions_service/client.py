@@ -38,7 +38,7 @@ from google.cloud.functions_v1.services.cloud_functions_service import pagers
 from google.cloud.functions_v1.types import functions
 from google.cloud.functions_v1.types import operations
 from google.iam.v1 import iam_policy_pb2 as iam_policy  # type: ignore
-from google.iam.v1 import policy_pb2 as policy  # type: ignore
+from google.iam.v1 import policy_pb2 as gi_policy  # type: ignore
 from google.protobuf import duration_pb2 as duration  # type: ignore
 from google.protobuf import empty_pb2 as empty  # type: ignore
 from google.protobuf import timestamp_pb2 as timestamp  # type: ignore
@@ -999,7 +999,7 @@ class CloudFunctionsServiceClient(metaclass=CloudFunctionsServiceClientMeta):
         retry: retries.Retry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
-    ) -> policy.Policy:
+    ) -> gi_policy.Policy:
         r"""Sets the IAM access control policy on the specified
         function. Replaces any existing policy.
 
@@ -1106,7 +1106,7 @@ class CloudFunctionsServiceClient(metaclass=CloudFunctionsServiceClientMeta):
         retry: retries.Retry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
-    ) -> policy.Policy:
+    ) -> gi_policy.Policy:
         r"""Gets the IAM access control policy for a function.
         Returns an empty policy if the function exists and does
         not have a policy set.
