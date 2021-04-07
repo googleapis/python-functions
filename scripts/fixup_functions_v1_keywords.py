@@ -47,9 +47,9 @@ class functionsCallTransformer(cst.CSTTransformer):
     'generate_download_url': ('name', 'version_id', ),
     'generate_upload_url': ('parent', ),
     'get_function': ('name', ),
-    'get_iam_policy': ('resource', 'options', ),
+    'get_iam_policy': ('resource', 'options_', ),
     'list_functions': ('parent', 'page_size', 'page_token', ),
-    'set_iam_policy': ('resource', 'policy', ),
+    'set_iam_policy': ('resource', 'policy_', ),
     'test_iam_permissions': ('resource', 'permissions', ),
     'update_function': ('function', 'update_mask', ),
 
