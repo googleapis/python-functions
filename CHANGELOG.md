@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.5.2](https://www.github.com/googleapis/python-functions/compare/v0.5.1...v0.5.2) (2021-05-12)
+
+
+### Bug Fixes
+
+* use correct default retry and timeout ([#42](https://www.github.com/googleapis/python-functions/issues/42)) ([8c7db91](https://www.github.com/googleapis/python-functions/commit/8c7db919535193151ed52465a3038d3ac72d701e))
+
 ### [0.5.1](https://www.github.com/googleapis/python-functions/compare/v0.5.0...v0.5.1) (2021-02-08)
 
 
