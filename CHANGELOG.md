@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.6.2](https://www.github.com/googleapis/python-functions/compare/v0.6.1...v0.6.2) (2021-06-19)
+
+
+### Documentation
+
+* omit mention of Python 2.7 in 'CONTRIBUTING.rst' ([#1127](https://www.github.com/googleapis/python-functions/issues/1127)) ([#72](https://www.github.com/googleapis/python-functions/issues/72)) ([ec7129a](https://www.github.com/googleapis/python-functions/commit/ec7129a4ce543a08db862f30bc67d394d5a7ef9c)), closes [#1126](https://www.github.com/googleapis/python-functions/issues/1126)
+
 ### [0.6.1](https://www.github.com/googleapis/python-functions/compare/v0.6.0...v0.6.1) (2021-06-16)
 
 
