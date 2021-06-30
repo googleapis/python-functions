@@ -10,7 +10,6 @@
 
 ### Bug Fixes
 
-* disable always_use_jwt_access ([81072d3](https://www.github.com/googleapis/python-functions/commit/81072d3225c9f7b17becd981b8bc0f53cdf8f613))
 * disable always_use_jwt_access ([#81](https://www.github.com/googleapis/python-functions/issues/81)) ([81072d3](https://www.github.com/googleapis/python-functions/commit/81072d3225c9f7b17becd981b8bc0f53cdf8f613))
 
 
