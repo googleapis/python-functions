@@ -3,14 +3,14 @@
 ### [1.0.2](https://www.github.com/googleapis/python-functions/compare/v1.0.1...v1.0.2) (2021-07-28)
 
 
-### Features
-
-* add Samples section to CONTRIBUTING.rst ([#86](https://www.github.com/googleapis/python-functions/issues/86)) ([a20de35](https://www.github.com/googleapis/python-functions/commit/a20de355fc32f6849c7ad5a9c5e16f436483fec5))
-
-
 ### Bug Fixes
 
 * enable self signed jwt for grpc ([#90](https://www.github.com/googleapis/python-functions/issues/90)) ([03bd652](https://www.github.com/googleapis/python-functions/commit/03bd652e1016ab88dbb458311ad82828219637c9))
+
+
+### Documentation
+
+* add Samples section to CONTRIBUTING.rst ([#86](https://www.github.com/googleapis/python-functions/issues/86)) ([a20de35](https://www.github.com/googleapis/python-functions/commit/a20de355fc32f6849c7ad5a9c5e16f436483fec5))
 
 
 ### Miscellaneous Chores
