@@ -74,3 +74,15 @@ s.replace(
   "main"
 )
 
+s.replace(
+  "README.rst",
+  "google-cloud-python/blob/main/README.rst",
+  "google-cloud-python/blob/master/README.rst"
+)
+
+s.replace(
+  "docs/README.rst",
+  "google-cloud-python/blob/main/README.rst",
+  "google-cloud-python/blob/master/README.rst"
+)
+
