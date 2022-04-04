@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.7.1](https://github.com/googleapis/python-functions/compare/v0.7.0...v0.7.1) (2022-04-04)
+
+
+### Bug Fixes
+
+* **deps:** require google-api-core >= 1.31.5, >= 2.3.2 on v0 release ([#162](https://github.com/googleapis/python-functions/issues/162)) ([4d20e2f](https://github.com/googleapis/python-functions/commit/4d20e2f2423d334847fe57247b05f5f59171b2b9))
+
 ## [0.7.0](https://www.github.com/googleapis/python-functions/compare/v0.6.1...v0.7.0) (2021-06-30)
 
 
