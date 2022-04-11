@@ -16,7 +16,7 @@
 from collections import OrderedDict
 import functools
 import re
-from typing import Dict, Optional, Sequence, Tuple, Type, Union
+from typing import Dict, Mapping, Optional, Sequence, Tuple, Type, Union
 import pkg_resources
 
 from google.api_core.client_options import ClientOptions
@@ -236,7 +236,6 @@ class CloudFunctionsServiceAsyncClient:
         r"""Returns a list of functions that belong to the
         requested project.
 
-
         .. code-block:: python
 
             from google.cloud import functions_v1
@@ -286,8 +285,7 @@ class CloudFunctionsServiceAsyncClient:
                 maximum=60.0,
                 multiplier=1.3,
                 predicate=retries.if_exception_type(
-                    core_exceptions.DeadlineExceeded,
-                    core_exceptions.ServiceUnavailable,
+                    core_exceptions.GoogleAPICallError,
                 ),
                 deadline=600.0,
             ),
@@ -332,7 +330,6 @@ class CloudFunctionsServiceAsyncClient:
     ) -> functions.CloudFunction:
         r"""Returns a function with the given name from the
         requested project.
-
 
         .. code-block:: python
 
@@ -405,8 +402,7 @@ class CloudFunctionsServiceAsyncClient:
                 maximum=60.0,
                 multiplier=1.3,
                 predicate=retries.if_exception_type(
-                    core_exceptions.DeadlineExceeded,
-                    core_exceptions.ServiceUnavailable,
+                    core_exceptions.GoogleAPICallError,
                 ),
                 deadline=600.0,
             ),
@@ -444,7 +440,6 @@ class CloudFunctionsServiceAsyncClient:
         r"""Creates a new function. If a function with the given name
         already exists in the specified project, the long running
         operation will return ``ALREADY_EXISTS`` error.
-
 
         .. code-block:: python
 
@@ -646,8 +641,7 @@ class CloudFunctionsServiceAsyncClient:
                 maximum=60.0,
                 multiplier=1.3,
                 predicate=retries.if_exception_type(
-                    core_exceptions.DeadlineExceeded,
-                    core_exceptions.ServiceUnavailable,
+                    core_exceptions.GoogleAPICallError,
                 ),
                 deadline=600.0,
             ),
@@ -695,7 +689,6 @@ class CloudFunctionsServiceAsyncClient:
         specified project. If the given function is used by some
         trigger, the trigger will be updated to remove this
         function.
-
 
         .. code-block:: python
 
@@ -782,8 +775,7 @@ class CloudFunctionsServiceAsyncClient:
                 maximum=60.0,
                 multiplier=1.3,
                 predicate=retries.if_exception_type(
-                    core_exceptions.DeadlineExceeded,
-                    core_exceptions.ServiceUnavailable,
+                    core_exceptions.GoogleAPICallError,
                 ),
                 deadline=600.0,
             ),
@@ -830,7 +822,6 @@ class CloudFunctionsServiceAsyncClient:
         testing purposes as very limited traffic is allowed. For more
         information on the actual limits, refer to `Rate
         Limits <https://cloud.google.com/functions/quotas#rate_limits>`__.
-
 
         .. code-block:: python
 
@@ -961,7 +952,6 @@ class CloudFunctionsServiceAsyncClient:
 
         -  ``Authorization: Bearer YOUR_TOKEN``
 
-
         .. code-block:: python
 
             from google.cloud import functions_v1
@@ -1037,7 +1027,6 @@ class CloudFunctionsServiceAsyncClient:
         For more information about the signed URL usage see:
         https://cloud.google.com/storage/docs/access-control/signed-urls
 
-
         .. code-block:: python
 
             from google.cloud import functions_v1
@@ -1109,7 +1098,6 @@ class CloudFunctionsServiceAsyncClient:
         r"""Sets the IAM access control policy on the specified
         function. Replaces any existing policy.
 
-
         .. code-block:: python
 
             from google.cloud import functions_v1
@@ -1141,21 +1129,26 @@ class CloudFunctionsServiceAsyncClient:
 
         Returns:
             google.iam.v1.policy_pb2.Policy:
-                Defines an Identity and Access Management (IAM) policy. It is used to
-                   specify access control policies for Cloud Platform
-                   resources.
+                An Identity and Access Management (IAM) policy, which specifies access
+                   controls for Google Cloud resources.
 
                    A Policy is a collection of bindings. A binding binds
-                   one or more members to a single role. Members can be
-                   user accounts, service accounts, Google groups, and
-                   domains (such as G Suite). A role is a named list of
-                   permissions (defined by IAM or configured by users).
-                   A binding can optionally specify a condition, which
-                   is a logic expression that further constrains the
-                   role binding based on attributes about the request
-                   and/or target resource.
+                   one or more members, or principals, to a single role.
+                   Principals can be user accounts, service accounts,
+                   Google groups, and domains (such as G Suite). A role
+                   is a named list of permissions; each role can be an
+                   IAM predefined role or a user-created custom role.
 
-                   **JSON Example**
+                   For some types of Google Cloud resources, a binding
+                   can also specify a condition, which is a logical
+                   expression that allows access to a resource only if
+                   the expression evaluates to true. A condition can add
+                   constraints based on attributes of the request, the
+                   resource, or both. To learn which resources support
+                   conditions in their IAM policies, see the [IAM
+                   documentation](\ https://cloud.google.com/iam/help/conditions/resource-policies).
+
+                   **JSON example:**
 
                       {
                          "bindings": [
@@ -1170,17 +1163,17 @@ class CloudFunctionsServiceAsyncClient:
 
                             }, { "role":
                             "roles/resourcemanager.organizationViewer",
-                            "members": ["user:eve@example.com"],
+                            "members": [ "user:eve@example.com" ],
                             "condition": { "title": "expirable access",
                             "description": "Does not grant access after
                             Sep 2020", "expression": "request.time <
                             timestamp('2020-10-01T00:00:00.000Z')", } }
 
-                         ]
+                         ], "etag": "BwWWja0YfJA=", "version": 3
 
                       }
 
-                   **YAML Example**
+                   **YAML example:**
 
                       bindings: - members: - user:\ mike@example.com -
                       group:\ admins@example.com - domain:google.com -
@@ -1191,11 +1184,12 @@ class CloudFunctionsServiceAsyncClient:
                       condition: title: expirable access description:
                       Does not grant access after Sep 2020 expression:
                       request.time <
-                      timestamp('2020-10-01T00:00:00.000Z')
+                      timestamp('2020-10-01T00:00:00.000Z') etag:
+                      BwWWja0YfJA= version: 3
 
                    For a description of IAM and its features, see the
-                   [IAM developer's
-                   guide](\ https://cloud.google.com/iam/docs).
+                   [IAM
+                   documentation](\ https://cloud.google.com/iam/docs/).
 
         """
         # Create or coerce a protobuf request object.
@@ -1241,7 +1235,6 @@ class CloudFunctionsServiceAsyncClient:
         Returns an empty policy if the function exists and does
         not have a policy set.
 
-
         .. code-block:: python
 
             from google.cloud import functions_v1
@@ -1273,21 +1266,26 @@ class CloudFunctionsServiceAsyncClient:
 
         Returns:
             google.iam.v1.policy_pb2.Policy:
-                Defines an Identity and Access Management (IAM) policy. It is used to
-                   specify access control policies for Cloud Platform
-                   resources.
+                An Identity and Access Management (IAM) policy, which specifies access
+                   controls for Google Cloud resources.
 
                    A Policy is a collection of bindings. A binding binds
-                   one or more members to a single role. Members can be
-                   user accounts, service accounts, Google groups, and
-                   domains (such as G Suite). A role is a named list of
-                   permissions (defined by IAM or configured by users).
-                   A binding can optionally specify a condition, which
-                   is a logic expression that further constrains the
-                   role binding based on attributes about the request
-                   and/or target resource.
+                   one or more members, or principals, to a single role.
+                   Principals can be user accounts, service accounts,
+                   Google groups, and domains (such as G Suite). A role
+                   is a named list of permissions; each role can be an
+                   IAM predefined role or a user-created custom role.
 
-                   **JSON Example**
+                   For some types of Google Cloud resources, a binding
+                   can also specify a condition, which is a logical
+                   expression that allows access to a resource only if
+                   the expression evaluates to true. A condition can add
+                   constraints based on attributes of the request, the
+                   resource, or both. To learn which resources support
+                   conditions in their IAM policies, see the [IAM
+                   documentation](\ https://cloud.google.com/iam/help/conditions/resource-policies).
+
+                   **JSON example:**
 
                       {
                          "bindings": [
@@ -1302,17 +1300,17 @@ class CloudFunctionsServiceAsyncClient:
 
                             }, { "role":
                             "roles/resourcemanager.organizationViewer",
-                            "members": ["user:eve@example.com"],
+                            "members": [ "user:eve@example.com" ],
                             "condition": { "title": "expirable access",
                             "description": "Does not grant access after
                             Sep 2020", "expression": "request.time <
                             timestamp('2020-10-01T00:00:00.000Z')", } }
 
-                         ]
+                         ], "etag": "BwWWja0YfJA=", "version": 3
 
                       }
 
-                   **YAML Example**
+                   **YAML example:**
 
                       bindings: - members: - user:\ mike@example.com -
                       group:\ admins@example.com - domain:google.com -
@@ -1323,11 +1321,12 @@ class CloudFunctionsServiceAsyncClient:
                       condition: title: expirable access description:
                       Does not grant access after Sep 2020 expression:
                       request.time <
-                      timestamp('2020-10-01T00:00:00.000Z')
+                      timestamp('2020-10-01T00:00:00.000Z') etag:
+                      BwWWja0YfJA= version: 3
 
                    For a description of IAM and its features, see the
-                   [IAM developer's
-                   guide](\ https://cloud.google.com/iam/docs).
+                   [IAM
+                   documentation](\ https://cloud.google.com/iam/docs/).
 
         """
         # Create or coerce a protobuf request object.
@@ -1372,7 +1371,6 @@ class CloudFunctionsServiceAsyncClient:
         r"""Tests the specified permissions against the IAM access control
         policy for a function. If the function does not exist, this will
         return an empty set of permissions, not a NOT_FOUND error.
-
 
         .. code-block:: python
 
