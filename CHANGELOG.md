@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.2](https://github.com/googleapis/python-functions/compare/v0.7.1...v0.7.2) (2022-06-08)
+
+
+### Bug Fixes
+
+* **deps:** require protobuf<4.0.0 on v0 branch ([#189](https://github.com/googleapis/python-functions/issues/189)) ([aadf006](https://github.com/googleapis/python-functions/commit/aadf0060b87cb4083164486641530f513e44b980))
+
 ### [0.7.1](https://github.com/googleapis/python-functions/compare/v0.7.0...v0.7.1) (2022-04-04)
 
 
