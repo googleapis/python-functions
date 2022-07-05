@@ -3407,7 +3407,6 @@ def test_cloud_functions_service_transport_auth_adc(transport_class):
     [
         transports.CloudFunctionsServiceGrpcTransport,
         transports.CloudFunctionsServiceGrpcAsyncIOTransport,
-        transports.CloudFunctionsServiceRestTransport,
     ],
 )
 def test_cloud_functions_service_transport_auth_gdch_credentials(transport_class):
