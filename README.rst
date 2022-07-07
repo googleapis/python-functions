@@ -3,7 +3,7 @@ Python Client for Cloud Functions API
 
 |stable| |pypi| |versions|
 
-`Cloud Functions API`_: 
+`Cloud Functions API`_: is a scalable pay as you go Functions-as-a-Service (FaaS) to run your code with zero server management.
 
 - `Client Library Documentation`_
 - `Product Documentation`_
