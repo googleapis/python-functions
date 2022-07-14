@@ -14,62 +14,69 @@
 # limitations under the License.
 #
 
-from google.cloud.functions_v1.services.cloud_functions_service.async_client import (
-    CloudFunctionsServiceAsyncClient,
+from google.cloud.functions_v2.services.function_service.client import (
+    FunctionServiceClient,
 )
-from google.cloud.functions_v1.services.cloud_functions_service.client import (
-    CloudFunctionsServiceClient,
-)
-from google.cloud.functions_v1.types.functions import (
-    CallFunctionRequest,
-    CallFunctionResponse,
-    CloudFunction,
-    CloudFunctionStatus,
-    CreateFunctionRequest,
-    DeleteFunctionRequest,
-    EventTrigger,
-    FailurePolicy,
-    GenerateDownloadUrlRequest,
-    GenerateDownloadUrlResponse,
-    GenerateUploadUrlRequest,
-    GenerateUploadUrlResponse,
-    GetFunctionRequest,
-    HttpsTrigger,
-    ListFunctionsRequest,
-    ListFunctionsResponse,
-    SecretEnvVar,
-    SecretVolume,
-    SourceRepository,
-    UpdateFunctionRequest,
-)
-from google.cloud.functions_v1.types.operations import (
-    OperationMetadataV1,
-    OperationType,
+from google.cloud.functions_v2.services.function_service.async_client import (
+    FunctionServiceAsyncClient,
 )
 
+from google.cloud.functions_v2.types.functions import BuildConfig
+from google.cloud.functions_v2.types.functions import CreateFunctionRequest
+from google.cloud.functions_v2.types.functions import DeleteFunctionRequest
+from google.cloud.functions_v2.types.functions import EventFilter
+from google.cloud.functions_v2.types.functions import EventTrigger
+from google.cloud.functions_v2.types.functions import Function
+from google.cloud.functions_v2.types.functions import GenerateDownloadUrlRequest
+from google.cloud.functions_v2.types.functions import GenerateDownloadUrlResponse
+from google.cloud.functions_v2.types.functions import GenerateUploadUrlRequest
+from google.cloud.functions_v2.types.functions import GenerateUploadUrlResponse
+from google.cloud.functions_v2.types.functions import GetFunctionRequest
+from google.cloud.functions_v2.types.functions import ListFunctionsRequest
+from google.cloud.functions_v2.types.functions import ListFunctionsResponse
+from google.cloud.functions_v2.types.functions import ListRuntimesRequest
+from google.cloud.functions_v2.types.functions import ListRuntimesResponse
+from google.cloud.functions_v2.types.functions import OperationMetadata
+from google.cloud.functions_v2.types.functions import RepoSource
+from google.cloud.functions_v2.types.functions import SecretEnvVar
+from google.cloud.functions_v2.types.functions import SecretVolume
+from google.cloud.functions_v2.types.functions import ServiceConfig
+from google.cloud.functions_v2.types.functions import Source
+from google.cloud.functions_v2.types.functions import SourceProvenance
+from google.cloud.functions_v2.types.functions import Stage
+from google.cloud.functions_v2.types.functions import StateMessage
+from google.cloud.functions_v2.types.functions import StorageSource
+from google.cloud.functions_v2.types.functions import UpdateFunctionRequest
+from google.cloud.functions_v2.types.functions import Environment
+
 __all__ = (
-    "CloudFunctionsServiceClient",
-    "CloudFunctionsServiceAsyncClient",
-    "CallFunctionRequest",
-    "CallFunctionResponse",
-    "CloudFunction",
+    "FunctionServiceClient",
+    "FunctionServiceAsyncClient",
+    "BuildConfig",
     "CreateFunctionRequest",
     "DeleteFunctionRequest",
+    "EventFilter",
     "EventTrigger",
-    "FailurePolicy",
+    "Function",
     "GenerateDownloadUrlRequest",
     "GenerateDownloadUrlResponse",
     "GenerateUploadUrlRequest",
     "GenerateUploadUrlResponse",
     "GetFunctionRequest",
-    "HttpsTrigger",
     "ListFunctionsRequest",
     "ListFunctionsResponse",
+    "ListRuntimesRequest",
+    "ListRuntimesResponse",
+    "OperationMetadata",
+    "RepoSource",
     "SecretEnvVar",
     "SecretVolume",
-    "SourceRepository",
+    "ServiceConfig",
+    "Source",
+    "SourceProvenance",
+    "Stage",
+    "StateMessage",
+    "StorageSource",
     "UpdateFunctionRequest",
-    "CloudFunctionStatus",
-    "OperationMetadataV1",
-    "OperationType",
+    "Environment",
 )

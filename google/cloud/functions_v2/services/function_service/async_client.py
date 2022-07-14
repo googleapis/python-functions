@@ -17,14 +17,14 @@ from collections import OrderedDict
 import functools
 import re
 from typing import Dict, Mapping, Optional, Sequence, Tuple, Type, Union
+import pkg_resources
 
+from google.api_core.client_options import ClientOptions
 from google.api_core import exceptions as core_exceptions
 from google.api_core import gapic_v1
 from google.api_core import retry as retries
-from google.api_core.client_options import ClientOptions
 from google.auth import credentials as ga_credentials  # type: ignore
 from google.oauth2 import service_account  # type: ignore
-import pkg_resources
 
 try:
     OptionalRetry = Union[retries.Retry, gapic_v1.method._MethodDefault]
@@ -33,6 +33,8 @@ except AttributeError:  # pragma: NO COVER
 
 from google.api_core import operation  # type: ignore
 from google.api_core import operation_async  # type: ignore
+from google.cloud.functions_v2.services.function_service import pagers
+from google.cloud.functions_v2.types import functions
 from google.cloud.location import locations_pb2  # type: ignore
 from google.iam.v1 import iam_policy_pb2  # type: ignore
 from google.iam.v1 import policy_pb2  # type: ignore
@@ -40,13 +42,9 @@ from google.longrunning import operations_pb2
 from google.protobuf import empty_pb2  # type: ignore
 from google.protobuf import field_mask_pb2  # type: ignore
 from google.protobuf import timestamp_pb2  # type: ignore
-
-from google.cloud.functions_v2.services.function_service import pagers
-from google.cloud.functions_v2.types import functions
-
-from .client import FunctionServiceClient
-from .transports.base import DEFAULT_CLIENT_INFO, FunctionServiceTransport
+from .transports.base import FunctionServiceTransport, DEFAULT_CLIENT_INFO
 from .transports.grpc_asyncio import FunctionServiceGrpcAsyncIOTransport
+from .client import FunctionServiceClient
 
 
 class FunctionServiceAsyncClient:
@@ -1237,9 +1235,10 @@ class FunctionServiceAsyncClient:
                 optionally specify a ``condition``, which is a logic
                 expression that further constrains the role binding
                 based on attributes about the request and/or target
-                resource.
-                **JSON Example**
-                ::
+                resource. JSON Example.
+
+                .. code-block:: python
+
                     {
                       "bindings": [
                         {
@@ -1263,8 +1262,11 @@ class FunctionServiceAsyncClient:
                         }
                       ]
                     }
+
                 **YAML Example**
+
                 ::
+
                     bindings:
                     - members:
                       - user:mike@example.com
@@ -1279,6 +1281,7 @@ class FunctionServiceAsyncClient:
                         title: expirable access
                         description: Does not grant access after Sep 2020
                         expression: request.time < timestamp('2020-10-01T00:00:00.000Z')
+
                 For a description of IAM and its features, see the `IAM
                 developer's
                 guide <https://cloud.google.com/iam/docs>`__.
@@ -1351,9 +1354,10 @@ class FunctionServiceAsyncClient:
                 optionally specify a ``condition``, which is a logic
                 expression that further constrains the role binding
                 based on attributes about the request and/or target
-                resource.
-                **JSON Example**
-                ::
+                resource. JSON Example.
+
+                .. code-block:: python
+
                     {
                       "bindings": [
                         {
@@ -1377,8 +1381,11 @@ class FunctionServiceAsyncClient:
                         }
                       ]
                     }
+
                 **YAML Example**
+
                 ::
+
                     bindings:
                     - members:
                       - user:mike@example.com
@@ -1393,6 +1400,7 @@ class FunctionServiceAsyncClient:
                         title: expirable access
                         description: Does not grant access after Sep 2020
                         expression: request.time < timestamp('2020-10-01T00:00:00.000Z')
+
                 For a description of IAM and its features, see the `IAM
                 developer's
                 guide <https://cloud.google.com/iam/docs>`__.
