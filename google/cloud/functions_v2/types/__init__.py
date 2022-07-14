@@ -17,6 +17,7 @@ from .functions import (
     BuildConfig,
     CreateFunctionRequest,
     DeleteFunctionRequest,
+    Environment,
     EventFilter,
     EventTrigger,
     Function,
@@ -40,7 +41,6 @@ from .functions import (
     StateMessage,
     StorageSource,
     UpdateFunctionRequest,
-    Environment,
 )
 
 __all__ = (
