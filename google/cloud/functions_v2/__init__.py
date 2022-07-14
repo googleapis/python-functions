@@ -14,36 +14,36 @@
 # limitations under the License.
 #
 
-from .services.function_service import FunctionServiceClient
-from .services.function_service import FunctionServiceAsyncClient
-
-from .types.functions import BuildConfig
-from .types.functions import CreateFunctionRequest
-from .types.functions import DeleteFunctionRequest
-from .types.functions import EventFilter
-from .types.functions import EventTrigger
-from .types.functions import Function
-from .types.functions import GenerateDownloadUrlRequest
-from .types.functions import GenerateDownloadUrlResponse
-from .types.functions import GenerateUploadUrlRequest
-from .types.functions import GenerateUploadUrlResponse
-from .types.functions import GetFunctionRequest
-from .types.functions import ListFunctionsRequest
-from .types.functions import ListFunctionsResponse
-from .types.functions import ListRuntimesRequest
-from .types.functions import ListRuntimesResponse
-from .types.functions import OperationMetadata
-from .types.functions import RepoSource
-from .types.functions import SecretEnvVar
-from .types.functions import SecretVolume
-from .types.functions import ServiceConfig
-from .types.functions import Source
-from .types.functions import SourceProvenance
-from .types.functions import Stage
-from .types.functions import StateMessage
-from .types.functions import StorageSource
-from .types.functions import UpdateFunctionRequest
-from .types.functions import Environment
+from .services.function_service import FunctionServiceAsyncClient, FunctionServiceClient
+from .types.functions import (
+    BuildConfig,
+    CreateFunctionRequest,
+    DeleteFunctionRequest,
+    Environment,
+    EventFilter,
+    EventTrigger,
+    Function,
+    GenerateDownloadUrlRequest,
+    GenerateDownloadUrlResponse,
+    GenerateUploadUrlRequest,
+    GenerateUploadUrlResponse,
+    GetFunctionRequest,
+    ListFunctionsRequest,
+    ListFunctionsResponse,
+    ListRuntimesRequest,
+    ListRuntimesResponse,
+    OperationMetadata,
+    RepoSource,
+    SecretEnvVar,
+    SecretVolume,
+    ServiceConfig,
+    Source,
+    SourceProvenance,
+    Stage,
+    StateMessage,
+    StorageSource,
+    UpdateFunctionRequest,
+)
 
 __all__ = (
     "FunctionServiceAsyncClient",
