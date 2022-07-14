@@ -52,7 +52,7 @@ for library in s.get_staging_dirs(default_version):
                 developer's"""
     )
     s.move(library, excludes=["setup.py"])
-mnan
+
 s.remove_staging_dirs()
 
 # ----------------------------------------------------------------------------
@@ -64,6 +64,8 @@ templated_files = gcp.CommonTemplates().py_library(
     versions=gcp.common.detect_versions(path="./google", default_first=True),
 )
 s.move(templated_files, excludes=[".coveragerc"]) # the microgenerator has a good coveragerc file
+
+python.configure_previous_major_version_branches()
 
 python.py_samples(skip_readmes=True)
 
