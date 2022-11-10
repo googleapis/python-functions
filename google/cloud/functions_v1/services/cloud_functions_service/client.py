@@ -16,7 +16,18 @@
 from collections import OrderedDict
 import os
 import re
-from typing import Dict, Mapping, Optional, Sequence, Tuple, Type, Union, cast
+from typing import (
+    Dict,
+    Mapping,
+    MutableMapping,
+    MutableSequence,
+    Optional,
+    Sequence,
+    Tuple,
+    Type,
+    Union,
+    cast,
+)
 
 from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
@@ -66,7 +77,7 @@ class CloudFunctionsServiceClientMeta(type):
 
     def get_transport_class(
         cls,
-        label: str = None,
+        label: Optional[str] = None,
     ) -> Type[CloudFunctionsServiceTransport]:
         """Returns an appropriate transport class.
 
@@ -391,7 +402,7 @@ class CloudFunctionsServiceClient(metaclass=CloudFunctionsServiceClientMeta):
         self,
         *,
         credentials: Optional[ga_credentials.Credentials] = None,
-        transport: Union[str, CloudFunctionsServiceTransport, None] = None,
+        transport: Optional[Union[str, CloudFunctionsServiceTransport]] = None,
         client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
     ) -> None:
@@ -489,10 +500,10 @@ class CloudFunctionsServiceClient(metaclass=CloudFunctionsServiceClientMeta):
 
     def list_functions(
         self,
-        request: Union[functions.ListFunctionsRequest, dict] = None,
+        request: Optional[Union[functions.ListFunctionsRequest, dict]] = None,
         *,
         retry: OptionalRetry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
+        timeout: Optional[float] = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> pagers.ListFunctionsPager:
         r"""Returns a list of functions that belong to the
@@ -582,11 +593,11 @@ class CloudFunctionsServiceClient(metaclass=CloudFunctionsServiceClientMeta):
 
     def get_function(
         self,
-        request: Union[functions.GetFunctionRequest, dict] = None,
+        request: Optional[Union[functions.GetFunctionRequest, dict]] = None,
         *,
-        name: str = None,
+        name: Optional[str] = None,
         retry: OptionalRetry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
+        timeout: Optional[float] = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> functions.CloudFunction:
         r"""Returns a function with the given name from the
@@ -687,12 +698,12 @@ class CloudFunctionsServiceClient(metaclass=CloudFunctionsServiceClientMeta):
 
     def create_function(
         self,
-        request: Union[functions.CreateFunctionRequest, dict] = None,
+        request: Optional[Union[functions.CreateFunctionRequest, dict]] = None,
         *,
-        location: str = None,
-        function: functions.CloudFunction = None,
+        location: Optional[str] = None,
+        function: Optional[functions.CloudFunction] = None,
         retry: OptionalRetry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
+        timeout: Optional[float] = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> operation.Operation:
         r"""Creates a new function. If a function with the given name
@@ -819,11 +830,11 @@ class CloudFunctionsServiceClient(metaclass=CloudFunctionsServiceClientMeta):
 
     def update_function(
         self,
-        request: Union[functions.UpdateFunctionRequest, dict] = None,
+        request: Optional[Union[functions.UpdateFunctionRequest, dict]] = None,
         *,
-        function: functions.CloudFunction = None,
+        function: Optional[functions.CloudFunction] = None,
         retry: OptionalRetry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
+        timeout: Optional[float] = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> operation.Operation:
         r"""Updates existing function.
@@ -941,11 +952,11 @@ class CloudFunctionsServiceClient(metaclass=CloudFunctionsServiceClientMeta):
 
     def delete_function(
         self,
-        request: Union[functions.DeleteFunctionRequest, dict] = None,
+        request: Optional[Union[functions.DeleteFunctionRequest, dict]] = None,
         *,
-        name: str = None,
+        name: Optional[str] = None,
         retry: OptionalRetry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
+        timeout: Optional[float] = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> operation.Operation:
         r"""Deletes a function with the given name from the
@@ -1068,12 +1079,12 @@ class CloudFunctionsServiceClient(metaclass=CloudFunctionsServiceClientMeta):
 
     def call_function(
         self,
-        request: Union[functions.CallFunctionRequest, dict] = None,
+        request: Optional[Union[functions.CallFunctionRequest, dict]] = None,
         *,
-        name: str = None,
-        data: str = None,
+        name: Optional[str] = None,
+        data: Optional[str] = None,
         retry: OptionalRetry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
+        timeout: Optional[float] = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> functions.CallFunctionResponse:
         r"""Synchronously invokes a deployed Cloud Function. To be used for
@@ -1182,10 +1193,10 @@ class CloudFunctionsServiceClient(metaclass=CloudFunctionsServiceClientMeta):
 
     def generate_upload_url(
         self,
-        request: Union[functions.GenerateUploadUrlRequest, dict] = None,
+        request: Optional[Union[functions.GenerateUploadUrlRequest, dict]] = None,
         *,
         retry: OptionalRetry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
+        timeout: Optional[float] = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> functions.GenerateUploadUrlResponse:
         r"""Returns a signed URL for uploading a function source code. For
@@ -1287,10 +1298,10 @@ class CloudFunctionsServiceClient(metaclass=CloudFunctionsServiceClientMeta):
 
     def generate_download_url(
         self,
-        request: Union[functions.GenerateDownloadUrlRequest, dict] = None,
+        request: Optional[Union[functions.GenerateDownloadUrlRequest, dict]] = None,
         *,
         retry: OptionalRetry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
+        timeout: Optional[float] = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> functions.GenerateDownloadUrlResponse:
         r"""Returns a signed URL for downloading deployed
@@ -1370,10 +1381,10 @@ class CloudFunctionsServiceClient(metaclass=CloudFunctionsServiceClientMeta):
 
     def set_iam_policy(
         self,
-        request: Union[iam_policy_pb2.SetIamPolicyRequest, dict] = None,
+        request: Optional[Union[iam_policy_pb2.SetIamPolicyRequest, dict]] = None,
         *,
         retry: OptionalRetry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
+        timeout: Optional[float] = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> policy_pb2.Policy:
         r"""Sets the IAM access control policy on the specified
@@ -1513,10 +1524,10 @@ class CloudFunctionsServiceClient(metaclass=CloudFunctionsServiceClientMeta):
 
     def get_iam_policy(
         self,
-        request: Union[iam_policy_pb2.GetIamPolicyRequest, dict] = None,
+        request: Optional[Union[iam_policy_pb2.GetIamPolicyRequest, dict]] = None,
         *,
         retry: OptionalRetry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
+        timeout: Optional[float] = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> policy_pb2.Policy:
         r"""Gets the IAM access control policy for a function.
@@ -1657,10 +1668,10 @@ class CloudFunctionsServiceClient(metaclass=CloudFunctionsServiceClientMeta):
 
     def test_iam_permissions(
         self,
-        request: Union[iam_policy_pb2.TestIamPermissionsRequest, dict] = None,
+        request: Optional[Union[iam_policy_pb2.TestIamPermissionsRequest, dict]] = None,
         *,
         retry: OptionalRetry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
+        timeout: Optional[float] = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> iam_policy_pb2.TestIamPermissionsResponse:
         r"""Tests the specified permissions against the IAM access control
