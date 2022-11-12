@@ -14,6 +14,16 @@
           "type": "json",
           "path": "samples/generated_samples/snippet_metadata_functions_v1.json",
           "jsonpath": "$.clientLibrary.version"
+        },
+        {
+          "type": "json",
+          "path": "samples/generated_samples/snippet_metadata_google.cloud.functions.v2.json",
+          "jsonpath": "$.clientLibrary.version"
+        },
+        {
+          "type": "json",
+          "path": "samples/generated_samples/snippet_metadata_google.cloud.functions.v1.json",
+          "jsonpath": "$.clientLibrary.version"
         }
       ]
     }
