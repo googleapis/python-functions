@@ -2022,14 +2022,14 @@ class FunctionServiceClient(metaclass=FunctionServiceClientMeta):
         return response
 
     def call_function(
-            self,
-            request: Optional[Union[functions.CallFunctionRequest, dict]] = None,
-            *,
-            name: Optional[str] = None,
-            data: Optional[str] = None,
-            retry: OptionalRetry = gapic_v1.method.DEFAULT,
-            timeout: Union[float, object] = gapic_v1.method.DEFAULT,
-            metadata: Sequence[Tuple[str, str]] = (),
+        self,
+        request: Optional[Union[functions.CallFunctionRequest, dict]] = None,
+        *,
+        name: Optional[str] = None,
+        data: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, str]] = (),
     ) -> functions.CallFunctionResponse:
         r"""Synchronously invokes a deployed Cloud Function. To be used for
         testing purposes as very limited traffic is allowed. For more

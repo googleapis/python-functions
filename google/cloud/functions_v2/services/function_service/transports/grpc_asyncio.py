@@ -657,7 +657,6 @@ class FunctionServiceGrpcAsyncIOTransport(FunctionServiceTransport):
             )
         return self._stubs["test_iam_permissions"]
 
-
     @property
     def call_function(
         self,
