@@ -644,5 +644,34 @@ class FunctionServiceGrpcTransport(FunctionServiceTransport):
     def kind(self) -> str:
         return "grpc"
 
+    @property
+    def call_function(
+        self,
+    ) -> Callable[[functions.CallFunctionRequest], functions.CallFunctionResponse]:
+        r"""Return a callable for the call function method over gRPC.
+
+        Synchronously invokes a deployed Cloud Function. To be used for
+        testing purposes as very limited traffic is allowed. For more
+        information on the actual limits, refer to `Rate
+        Limits <https://cloud.google.com/functions/quotas#rate_limits>`__.
+
+        Returns:
+            Callable[[~.CallFunctionRequest],
+                    ~.CallFunctionResponse]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "call_function" not in self._stubs:
+            self._stubs["call_function"] = self.grpc_channel.unary_unary(
+                "/google.cloud.functions.v2.FunctionService/CallFunction",
+                request_serializer=functions.CallFunctionRequest.serialize,
+                response_deserializer=functions.CallFunctionResponse.deserialize,
+            )
+        return self._stubs["call_function"]
+
 
 __all__ = ("FunctionServiceGrpcTransport",)

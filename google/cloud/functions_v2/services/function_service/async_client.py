@@ -1626,6 +1626,120 @@ class FunctionServiceAsyncClient:
     async def __aexit__(self, exc_type, exc, tb):
         await self.transport.close()
 
+    async def call_function(
+        self,
+        request: Optional[Union[functions.CallFunctionRequest, dict]] = None,
+        *,
+        name: Optional[str] = None,
+        data: Optional[str] = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: Union[float, object] = gapic_v1.method.DEFAULT,
+        metadata: Sequence[Tuple[str, str]] = (),
+    ) -> functions.CallFunctionResponse:
+        r"""Synchronously invokes a deployed Cloud Function. To be used for
+        testing purposes as very limited traffic is allowed. For more
+        information on the actual limits, refer to `Rate
+        Limits <https://cloud.google.com/functions/quotas#rate_limits>`__.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import functions_v1
+
+            async def sample_call_function():
+                # Create a client
+                client = functions_v1.CloudFunctionsServiceAsyncClient()
+
+                # Initialize request argument(s)
+                request = functions_v1.CallFunctionRequest(
+                    name="name_value",
+                    data="data_value",
+                )
+
+                # Make the request
+                response = await client.call_function(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Optional[Union[google.cloud.functions_v1.types.CallFunctionRequest, dict]]):
+                The request object. Request for the `CallFunction`
+                method.
+            name (:class:`str`):
+                Required. The name of the function to
+                be called.
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            data (:class:`str`):
+                Required. Input to be passed to the
+                function.
+
+                This corresponds to the ``data`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, str]]): Strings which should be
+                sent along with the request as metadata.
+
+        Returns:
+            google.cloud.functions_v1.types.CallFunctionResponse:
+                Response of CallFunction method.
+        """
+        # Create or coerce a protobuf request object.
+        # Quick check: If we got a request object, we should *not* have
+        # gotten any keyword arguments that map to the request.
+        has_flattened_params = any([name, data])
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        request = functions.CallFunctionRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if name is not None:
+            request.name = name
+        if data is not None:
+            request.data = data
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = gapic_v1.method_async.wrap_method(
+            self._client._transport.call_function,
+            default_timeout=600.0,
+            client_info=DEFAULT_CLIENT_INFO,
+        )
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Send the request.
+        response = await rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
+
+        # Done; return the response.
+        return response
+
 
 DEFAULT_CLIENT_INFO = gapic_v1.client_info.ClientInfo(
     gapic_version=package_version.__version__

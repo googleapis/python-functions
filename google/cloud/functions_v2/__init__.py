@@ -47,6 +47,8 @@ from .types.functions import (
     StateMessage,
     StorageSource,
     UpdateFunctionRequest,
+    CallFunctionRequest,
+    CallFunctionResponse,
 )
 
 __all__ = (
@@ -79,4 +81,6 @@ __all__ = (
     "StateMessage",
     "StorageSource",
     "UpdateFunctionRequest",
+    "CallFunctionRequest",
+    "CallFunctionResponse",
 )

@@ -50,6 +50,7 @@ __protobuf__ = proto.module(
         "ListRuntimesResponse",
         "OperationMetadata",
         "Stage",
+        "CallFunctionRequest",
     },
 )
 
@@ -1480,6 +1481,57 @@ class Stage(proto.Message):
         proto.MESSAGE,
         number=6,
         message="StateMessage",
+    )
+
+
+class CallFunctionRequest(proto.Message):
+    r"""Request for the ``CallFunction`` method.
+
+    Attributes:
+        name (str):
+            Required. The name of the function to be
+            called.
+        data (str):
+            Required. Input to be passed to the function.
+    """
+
+    name: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    data: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+
+
+class CallFunctionResponse(proto.Message):
+    r"""Response of ``CallFunction`` method.
+
+    Attributes:
+        execution_id (str):
+            Execution id of function invocation.
+        result (str):
+            Result populated for successful execution of
+            synchronous function. Will not be populated if
+            function does not return a result through
+            context.
+        error (str):
+            Either system or user-function generated
+            error. Set if execution was not successful.
+    """
+
+    execution_id: str = proto.Field(
+        proto.STRING,
+        number=1,
+    )
+    result: str = proto.Field(
+        proto.STRING,
+        number=2,
+    )
+    error: str = proto.Field(
+        proto.STRING,
+        number=3,
     )
 
 

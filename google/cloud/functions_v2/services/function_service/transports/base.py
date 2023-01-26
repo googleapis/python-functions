@@ -166,6 +166,11 @@ class FunctionServiceTransport(abc.ABC):
                 default_timeout=None,
                 client_info=client_info,
             ),
+            self.call_function: gapic_v1.method.wrap_method(
+                self.call_function,
+                default_timeout=600.0,
+                client_info=client_info,
+            ),
         }
 
     def close(self):
@@ -329,6 +334,17 @@ class FunctionServiceTransport(abc.ABC):
 
     @property
     def kind(self) -> str:
+        raise NotImplementedError()
+
+    @property
+    def call_function(
+        self,
+    ) -> Callable[
+        [functions.CallFunctionRequest],
+        Union[
+            functions.CallFunctionResponse, Awaitable[functions.CallFunctionResponse]
+        ],
+    ]:
         raise NotImplementedError()
 
 

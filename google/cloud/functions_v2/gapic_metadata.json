@@ -49,6 +49,11 @@
               "methods": [
                 "update_function"
               ]
+            },
+            "CallFunction": {
+              "methods": [
+                "call_function"
+              ]
             }
           }
         },
@@ -93,6 +98,11 @@
             "UpdateFunction": {
               "methods": [
                 "update_function"
+              ]
+            },
+            "CallFunction": {
+              "methods": [
+                "call_function"
               ]
             }
           }
