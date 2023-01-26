@@ -2780,6 +2780,7 @@ def test_function_service_base_transport():
         "list_locations",
         "get_operation",
         "list_operations",
+        "call_function",
     )
     for method in methods:
         with pytest.raises(NotImplementedError):
@@ -4544,3 +4545,130 @@ def test_api_key_credentials(client_class, transport_class):
                 always_use_jwt_access=True,
                 api_audience=None,
             )
+
+
+@pytest.mark.parametrize(
+    "request_type",
+    [
+        functions.CallFunctionRequest,
+        dict,
+    ],
+)
+def test_call_function(request_type, transport: str = "grpc"):
+    client = FunctionServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type()
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(type(client.transport.call_function), "__call__") as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = functions.CallFunctionResponse(
+            execution_id="execution_id_value",
+            result="result_value",
+            error="error_value",
+        )
+        response = client.call_function(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == functions.CallFunctionRequest()
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, functions.CallFunctionResponse)
+    assert response.execution_id == "execution_id_value"
+    assert response.result == "result_value"
+    assert response.error == "error_value"
+
+
+def test_call_function_empty_call():
+    # This test is a coverage failsafe to make sure that totally empty calls,
+    # i.e. request == None and no flattened fields passed, work.
+    client = FunctionServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport="grpc",
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(type(client.transport.call_function), "__call__") as call:
+        client.call_function()
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == functions.CallFunctionRequest()
+
+
+def test_call_function_field_headers():
+    client = FunctionServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = functions.CallFunctionRequest()
+
+    request.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(type(client.transport.call_function), "__call__") as call:
+        call.return_value = functions.CallFunctionResponse()
+        client.call_function(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "name=name_value",
+    ) in kw["metadata"]
+
+
+def test_call_function_flattened():
+    client = FunctionServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(type(client.transport.call_function), "__call__") as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = functions.CallFunctionResponse()
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        client.call_function(
+            name="name_value",
+            data="data_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].name
+        mock_val = "name_value"
+        assert arg == mock_val
+        arg = args[0].data
+        mock_val = "data_value"
+        assert arg == mock_val
+
+
+def test_call_function_flattened_error():
+    client = FunctionServiceClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.call_function(
+            functions.CallFunctionRequest(),
+            name="name_value",
+            data="data_value",
+        )
