@@ -4672,3 +4672,126 @@ def test_call_function_flattened_error():
             name="name_value",
             data="data_value",
         )
+
+
+@pytest.mark.asyncio
+async def test_call_function_async(
+    transport: str = "grpc_asyncio", request_type=functions.CallFunctionRequest
+):
+    client = FunctionServiceAsyncClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+        transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type()
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(type(client.transport.call_function), "__call__") as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            functions.CallFunctionResponse(
+                execution_id="execution_id_value",
+                result="result_value",
+                error="error_value",
+            )
+        )
+        response = await client.call_function(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == functions.CallFunctionRequest()
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, functions.CallFunctionResponse)
+    assert response.execution_id == "execution_id_value"
+    assert response.result == "result_value"
+    assert response.error == "error_value"
+
+
+@pytest.mark.asyncio
+async def test_call_function_async_from_dict():
+    await test_call_function_async(request_type=dict)
+
+
+@pytest.mark.asyncio
+async def test_call_function_field_headers_async():
+    client = FunctionServiceAsyncClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = functions.CallFunctionRequest()
+
+    request.name = "name_value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(type(client.transport.call_function), "__call__") as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            functions.CallFunctionResponse()
+        )
+        await client.call_function(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert (
+        "x-goog-request-params",
+        "name=name_value",
+    ) in kw["metadata"]
+
+
+@pytest.mark.asyncio
+async def test_call_function_flattened_async():
+    client = FunctionServiceAsyncClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(type(client.transport.call_function), "__call__") as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = functions.CallFunctionResponse()
+
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            functions.CallFunctionResponse()
+        )
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        response = await client.call_function(
+            name="name_value",
+            data="data_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        arg = args[0].name
+        mock_val = "name_value"
+        assert arg == mock_val
+        arg = args[0].data
+        mock_val = "data_value"
+        assert arg == mock_val
+
+
+@pytest.mark.asyncio
+async def test_call_function_flattened_error_async():
+    client = FunctionServiceAsyncClient(
+        credentials=ga_credentials.AnonymousCredentials(),
+    )
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        await client.call_function(
+            functions.CallFunctionRequest(),
+            name="name_value",
+            data="data_value",
+        )
