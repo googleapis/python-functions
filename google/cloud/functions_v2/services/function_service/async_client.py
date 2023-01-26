@@ -1650,14 +1650,14 @@ class FunctionServiceAsyncClient:
             # - It may require specifying regional endpoints when creating the service
             #   client as shown in:
             #   https://googleapis.dev/python/google-api-core/latest/client_options.html
-            from google.cloud import functions_v1
+            from google.cloud import functions_v2
 
             async def sample_call_function():
                 # Create a client
-                client = functions_v1.CloudFunctionsServiceAsyncClient()
+                client = functions_v2.FunctionServiceAsyncClient()
 
                 # Initialize request argument(s)
-                request = functions_v1.CallFunctionRequest(
+                request = functions_v2.CallFunctionRequest(
                     name="name_value",
                     data="data_value",
                 )
@@ -1669,7 +1669,7 @@ class FunctionServiceAsyncClient:
                 print(response)
 
         Args:
-            request (Optional[Union[google.cloud.functions_v1.types.CallFunctionRequest, dict]]):
+            request (Optional[Union[google.cloud.functions_v2.types.CallFunctionRequest, dict]]):
                 The request object. Request for the `CallFunction`
                 method.
             name (:class:`str`):
@@ -1693,7 +1693,7 @@ class FunctionServiceAsyncClient:
                 sent along with the request as metadata.
 
         Returns:
-            google.cloud.functions_v1.types.CallFunctionResponse:
+            google.cloud.functions_v2.types.CallFunctionResponse:
                 Response of CallFunction method.
         """
         # Create or coerce a protobuf request object.
