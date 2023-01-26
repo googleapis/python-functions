@@ -2031,6 +2031,66 @@ class FunctionServiceClient(metaclass=FunctionServiceClientMeta):
             timeout: Union[float, object] = gapic_v1.method.DEFAULT,
             metadata: Sequence[Tuple[str, str]] = (),
     ) -> functions.CallFunctionResponse:
+        r"""Synchronously invokes a deployed Cloud Function. To be used for
+        testing purposes as very limited traffic is allowed. For more
+        information on the actual limits, refer to `Rate
+        Limits <https://cloud.google.com/functions/quotas#rate_limits>`__.
+
+        .. code-block:: python
+
+            # This snippet has been automatically generated and should be regarded as a
+            # code template only.
+            # It will require modifications to work:
+            # - It may require correct/in-range values for request initialization.
+            # - It may require specifying regional endpoints when creating the service
+            #   client as shown in:
+            #   https://googleapis.dev/python/google-api-core/latest/client_options.html
+            from google.cloud import functions_v2
+
+            def sample_call_function():
+                # Create a client
+                client = functions_v2.FunctionServiceAsyncClient()
+
+                # Initialize request argument(s)
+                request = functions_v2.CallFunctionRequest(
+                    name="name_value",
+                    data="data_value",
+                )
+
+                # Make the request
+                response = client.call_function(request=request)
+
+                # Handle the response
+                print(response)
+
+        Args:
+            request (Union[google.cloud.functions_v2.types.CallFunctionRequest, dict]):
+                The request object. Request for the `CallFunction`
+                method.
+            name (str):
+                Required. The name of the function to
+                be called.
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            data (str):
+                Required. Input to be passed to the
+                function.
+
+                This corresponds to the ``data`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, str]]): Strings which should be
+                sent along with the request as metadata.
+
+        Returns:
+            google.cloud.functions_v2.types.CallFunctionResponse:
+                Response of CallFunction method.
+        """
         # Create or coerce a protobuf request object.
         # Quick check: If we got a request object, we should *not* have
         # gotten any keyword arguments that map to the request.
